@@ -1,51 +1,52 @@
 package Program;
 
 import java.util.Scanner;
-import Management.EmployeeManagement; // 1. THÊM DÒNG NÀY ĐỂ IMPORT
+// import Management.EmployeeManagement; // Tạm ẩn nếu không gọi ở Main
 
 public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        
-        // 2. ĐỔI EmployeeManager THÀNH EmployeeManagement CHO ĐÚNG TÊN FILE
-        EmployeeManagement empManager = new EmployeeManagement(); 
         int choice;
+        
         do {
-            System.out.println("\n==================================");
-            System.out.println("     SALE MANAGEMENT SYSTEM       ");
-            System.out.println("==================================");
-            System.out.println("1. Add a new employee");
-            System.out.println("2. Update employee information");
-            System.out.println("3. Remove an employee");
-            System.out.println("4. List all employees");
-            System.out.println("0. Exit System");
-            System.out.println("==================================");
-            System.out.print("Please enter your choice (0-4): ");
+            // GIAO DIỆN GIỐNG 100% ẢNH MẪU CỦA LEADER
+            System.out.println("\nSYSTEM INTERFACE");
+            System.out.println("1. MAIN MENU");
+            System.out.println("=======================================");
+            System.out.println("        SALES MANAGEMENT SYSTEM        ");
+            System.out.println("=======================================");
+            System.out.println("1. Manage Products");
+            System.out.println("2. Manage Customers");
+            System.out.println("3. Manage Sales Transactions");
+            System.out.println("4. Reports");
+            System.out.println("5. Exit"); 
+            System.out.println("---------------------------------------");
+            System.out.print("Choose an option: ");
             
             choice = sc.nextInt();
-            sc.nextLine(); // Xóa bộ đệm sau khi nhập số
+            sc.nextLine(); // Xóa bộ đệm
 
             switch (choice) {
                 case 1:
-                    empManager.addEmployee(sc);
+                    System.out.println("\n>>> Entering Product Management... <<<");
                     break;
                 case 2:
-                    empManager.updateEmployeeRole(sc);
+                    System.out.println("\n>>> Entering Customer Management... <<<");
                     break;
                 case 3:
-                    empManager.removeEmployee(sc);
+                    System.out.println("\n>>> Entering Sales Transactions... <<<");
                     break;
                 case 4:
-                    empManager.listAllEmployees();
+                    System.out.println("\n>>> Entering Reports... <<<");
                     break;
-                case 0:
+                case 5:
                     System.out.println("Exiting the system. Goodbye!");
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
-        } while (choice != 0);
+        } while (choice != 5);
         
         sc.close();
     }
