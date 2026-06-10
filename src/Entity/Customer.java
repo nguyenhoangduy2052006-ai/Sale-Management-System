@@ -4,12 +4,6 @@
  */
 package Entity;
 
-/**
- *
- * @author Nguyen Hoang Duy
- */
-public class Customer {
-    package entity;
 
 public class Customer {
 
