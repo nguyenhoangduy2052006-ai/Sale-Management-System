@@ -1,111 +1,113 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Management;
+// Lớp này thuộc package management
+package management;
 
-/**
- *
- * @author Nguyen Hoang Duy
- */
+// Import lớp Customer từ package entity
+import entity.Customer;
+
+// Import ArrayList để lưu danh sách khách hàng
+import java.util.ArrayList;
+
+// Khai báo lớp CustomerManagement
 public class CustomerManagement {
 
+    // Thuộc tính private để thể hiện tính đóng gói
+    // Danh sách chứa nhiều đối tượng Customer
     private ArrayList<Customer> customerList;
 
-    public CustomerManager() {
+    // Constructor
+    // Được gọi khi tạo đối tượng CustomerManagement
+    public CustomerManagement() {
+
+        // Khởi tạo danh sách rỗng
         customerList = new ArrayList<>();
     }
 
-    // Add new customer
+    // Thêm khách hàng mới vào danh sách
     public void addNewCustomer(Customer customer) {
+
+        // Thêm đối tượng Customer vào ArrayList
         customerList.add(customer);
     }
 
-    // Update customer information
+    // Cập nhật thông tin khách hàng
     public void updateCustomerInfor(String customerID,
                                     String name,
                                     String phone,
                                     String address) {
 
+        // Duyệt toàn bộ danh sách khách hàng
         for (Customer customer : customerList) {
 
+            // Kiểm tra ID có trùng không
             if (customer.getCustomerID().equals(customerID)) {
 
+                // Gọi phương thức updateCustomerInfor()
+                // của lớp Customer để cập nhật dữ liệu
                 customer.updateCustomerInfor(
                         name,
                         phone,
                         address
                 );
+            }
+        }
+    }
 
+    // Xóa khách hàng theo ID
+    public void removeCustomer(String customerID) {
+
+        // Duyệt danh sách khách hàng
+        for (Customer customer : customerList) {
+
+            // Nếu tìm thấy khách hàng có ID tương ứng
+            if (customer.getCustomerID().equals(customerID)) {
+
+                // Xóa khách hàng khỏi danh sách
+                customerList.remove(customer);
+
+                // Dừng vòng lặp sau khi xóa
                 break;
             }
         }
     }
 
-    // Remove customer
-    public void removeCustomerInfor(String customerID) {
+    // Tìm khách hàng theo ID
+    public Customer searchCustomerByID(String customerID) {
 
-        for (int i = 0; i < customerList.size(); i++) {
+        // Duyệt danh sách khách hàng
+        for (Customer customer : customerList) {
 
-            if (customerList.get(i)
-                    .getCustomerID()
-                    .equals(customerID)) {
+            // Nếu ID trùng khớp
+            if (customer.getCustomerID().equals(customerID)) {
 
-                customerList.remove(i);
-                break;
+                // Trả về khách hàng tìm được
+                return customer;
             }
         }
+
+        // Không tìm thấy thì trả về null
+        return null;
     }
 
-    // List all customers
+    // Hiển thị danh sách khách hàng
     public void listCustomer() {
 
+        // Duyệt tất cả khách hàng trong danh sách
         for (Customer customer : customerList) {
 
-            System.out.println("ID: "
-                    + customer.getCustomerID());
+            // Hiển thị mã khách hàng
+            System.out.println(customer.getCustomerID());
 
-            System.out.println("Name: "
-                    + customer.getCustomerName());
+            // Hiển thị tên khách hàng
+            System.out.println(customer.getCustomerName());
 
-            System.out.println("Phone: "
-                    + customer.getPhoneNumber());
+            // Hiển thị số điện thoại
+            System.out.println(customer.getPhoneNumber());
 
-            System.out.println("Address: "
-                    + customer.getAddress());
+            // Hiển thị địa chỉ
+            System.out.println(customer.getAddress());
 
-            System.out.println("Total Purchase: "
-                    + customer.getTotalPurchase());
-
-            System.out.println();
+            // Hiển thị tổng tiền mua hàng
+            System.out.println(customer.getTotalPurchase());
         }
     }
-
-    // Search customer by name
-    public void searchCustomerByName(String name) {
-
-        for (Customer customer : customerList) {
-
-            if (customer.getCustomerName()
-                    .equalsIgnoreCase(name)) {
-
-                System.out.println("ID: "
-                        + customer.getCustomerID());
-
-                System.out.println("Name: "
-                        + customer.getCustomerName());
-
-                System.out.println("Phone: "
-                        + customer.getPhoneNumber());
-
-                System.out.println("Address: "
-                        + customer.getAddress());
-
-                System.out.println("Total Purchase: "
-                        + customer.getTotalPurchase());
-            }
-        }
-    }
-}
-    
 }
