@@ -1,13 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package Entity;
+package entity;
 
-/**
- *
- * @author Nguyen Hoang Duy
- */
-public class Customer {
-    
+public class Main {
+
+    public static void main(String[] args) {
+
+        Customer customer = new Customer(
+                "C003",
+                "Thi",
+                "036420554",
+                "Ho Chi Minh City"
+        );
+
+        customer.changeName("Lien");
+        customer.addPurchase(500000);
+
+        System.out.println("ID: " + customer.getCustomerID());
+        System.out.println("Name: " + customer.getCustomerName());
+        System.out.println("Phone: " + customer.getPhoneNumber());
+        System.out.println("Address: " + customer.getAddress());
+        System.out.println("Total Purchase: " + customer.getTotalPurchase());
+    }
 }
