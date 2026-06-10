@@ -1,13 +1,38 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Management;
 
-/**
- *
- * @author Nguyen Hoang Duy
- */
+import Entity.Product;
+import java.util.ArrayList;
+
 public class ProductManagement {
+    private ArrayList<Product> ProductList; // Khai bao bien
+    
+    public ProductManagement () {
+        this.ProductList= new ArrayList<>(); 
+    }
+    
+    // findProductById Function 
+    public Product findProductById () {
+        
+    }
+    
+    // addNewProduct fuction
+    public Product addNewProdtuct () {
+        
+    }
+    
+    // updateProductInfo
+    public Product updateProductInfo () {
+        
+    }
+    
+    //removeProduct
+    public Product removeProduct () {
+        
+    }
+    // displayProductList function
+    public Product displayProductList () {
+        
+    }
     
 }
