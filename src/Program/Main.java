@@ -2,30 +2,16 @@ package Program;
 
 import java.util.Scanner;
 
-// IMPORT CHÍNH XÁC THEO THỨ TỰ CÁC MODULE TRONG REPORT
-import Management.ProductManagement;
-import Management.CustomerManagement;
-import Management.SaleManagement;
-import Management.InventoryManagement;
-import Management.Reporting;
-import Management.SupplierManagement;
-import Management.EmployeeManagement;
-import Management.VoucherManagement;
+// CHỈ IMPORT PHÂN HỆ CỦA ÔNG ĐỂ KHÔNG BỊ LỖI (CÁC PHÂN HỆ KHÁC CHƯA CÓ FILE)
+import Management.EmployeeManagement; 
 
 public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         
-        // Khởi tạo các đối tượng quản lý tương ứng với 8 phân hệ
-        ProductManagement productMgr = new ProductManagement();
-        CustomerManagement customerMgr = new CustomerManagement();
-        SaleManagement saleMgr = new SaleManagement();
-        InventoryManagement inventoryMgr = new InventoryManagement();
-        Reporting reportingMgr = new Reporting();
-        SupplierManagement supplierMgr = new SupplierManagement();
+        // Chỉ khởi tạo phân hệ Quản lý nhân viên 
         EmployeeManagement employeeMgr = new EmployeeManagement();
-        VoucherManagement voucherMgr = new VoucherManagement();
         
         int choice;
         
@@ -54,35 +40,28 @@ public class Main {
             switch (choice) {
                 case 1:
                     System.out.println("\n>>> Entering Product Management Sub-Menu... <<<");
-                    // productMgr.displayMenu(sc); 
                     break;
                 case 2:
                     System.out.println("\n>>> Entering Customer Management Sub-Menu... <<<");
-                    // customerMgr.displayMenu(sc); 
                     break;
                 case 3:
                     System.out.println("\n>>> Entering Sale Management Sub-Menu... <<<");
-                    // saleMgr.displayMenu(sc);
                     break;
                 case 4:
                     System.out.println("\n>>> Entering Inventory Management Sub-Menu... <<<");
-                    // inventoryMgr.displayMenu(sc);
                     break;
                 case 5:
                     System.out.println("\n>>> Entering Reporting Sub-Menu... <<<");
-                    // reportingMgr.displayMenu(sc);
                     break;
                 case 6:
                     System.out.println("\n>>> Entering Supplier Management Sub-Menu... <<<");
-                    // supplierMgr.displayMenu(sc);
                     break;
                 case 7:
-                    // Kích hoạt Menu chức năng chi tiết (Add, Update, Delete) cho phần của ông
+                    // Gọi đến menu con chức năng quản lý nhân viên của ông
                     employeeMgr.displayMenu(sc); 
                     break;
                 case 8:
                     System.out.println("\n>>> Entering Voucher Management Sub-Menu... <<<");
-                    // voucherMgr.displayMenu(sc);
                     break;
                 case 9:
                     System.out.println("Exiting the system. Goodbye!");
