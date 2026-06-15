@@ -1,13 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model.customer;
 
-/**
- *
- * @author Nguyen Hoang Duy
- */
-public class RegularCustomer {
-    
-}
+public class RegularCustomer extends Customer {
+
+    // Thuộc tính riêng của RegularCustomer
+    private double regularDiscount;
+
+    // Constructor
+    public RegularCustomer(String customerID,
+                           String customerName,
+                           String phoneNumber,
+                           String address,
+                           double regularDiscount) {
+
+        super(customerID, customerName, phoneNumber, address);
+        this.regularDiscount = regularDiscount;
+    }
+
+    // Getter
+    public double getRegularDiscount() {
+        return regularDiscount;
+    }
+
+    // Setter
+    public void setRegularDiscount(double regularDiscount) {
+        this.regularDiscount = regularDiscount;
+    }
+
+    // Tính giảm giá
+    public double calculateDiscount() {
+        return getTotalPurchase() * regularDiscount;
+    }
