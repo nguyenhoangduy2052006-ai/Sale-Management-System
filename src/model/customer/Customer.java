@@ -1,8 +1,8 @@
-
 package model.customer;
 
 public class Customer {
-        // Encapsulation: che giấu dữ liệu bằng private
+
+    // Encapsulation: che giấu dữ liệu bằng private
     private String customerID;
     private String customerName;
     private String phoneNumber;
@@ -80,5 +80,25 @@ public class Customer {
     public double getTotalPurchase() {
         return totalPurchase;
     }
-}
 
+    // Setter methods
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setTotalPurchase(double totalPurchase) {
+        this.totalPurchase = totalPurchase;
+    }
+}
