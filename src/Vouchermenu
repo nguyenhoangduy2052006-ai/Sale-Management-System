@@ -1,1 +1,94 @@
+package ui;
 
+import java.util.Scanner;
+import manager.VoucherManagement;
+import model.voucher.Voucher;
+
+public class VoucherMenu {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        VoucherManagement vm = new VoucherManagement();
+
+        int choice;
+
+        do {
+            System.out.println("\n===== VOUCHER MENU =====");
+            System.out.println("1. Add Voucher");
+            System.out.println("2. Search Voucher");
+            System.out.println("3. Display Vouchers");
+            System.out.println("0. Exit");
+            System.out.print("Choose: ");
+
+            choice = sc.nextInt();
+            sc.nextLine(); // Clear bộ nhớ đệm tránh trôi lệnh khi nhập chuỗi tiếp theo
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Voucher Code: ");
+                    String vCode = sc.nextLine();
+
+                    System.out.print("Discount Type (e.g., Percentage / Fixed): ");
+                    String vType = sc.nextLine();
+
+                    System.out.print("Discount Value: ");
+                    double vValue = sc.nextDouble();
+                    sc.nextLine(); // Clear bộ nhớ đệm
+
+                    System.out.print("Start Date (yyyy-MM-dd): ");
+                    String sDate = sc.nextLine();
+
+                    System.out.print("End Date (yyyy-MM-dd): ");
+                    String eDate = sc.nextLine();
+
+                    System.out.print("Usage Limit: ");
+                    int limit = sc.nextInt();
+
+                    System.out.print("Status (true = Active / false = Inactive): ");
+                    boolean status = sc.nextBoolean();
+                    sc.nextLine(); // Clear bộ nhớ đệm
+
+                    // Khởi tạo đối tượng Voucher khớp chuẩn 7 tham số theo Constructor của bạn
+                    Voucher voucher = new Voucher(vCode, vType, vValue, sDate, eDate, limit, status);
+                    
+                    // Gọi hàm add từ lớp quản lý
+                    vm.addVoucher(voucher);
+
+                    System.out.println("Voucher added successfully!");
+                    break;
+
+                case 2:
+                    System.out.print("Enter Voucher Code to search: ");
+                    String searchVCode = sc.nextLine();
+
+                    // Gọi hàm kiểm tra có kiểu dữ liệu trả về là boolean từ VoucherManagement
+                    boolean isExist = vm.checkVoucher(searchVCode);
+
+                    // ĐÃ BỎ IF-ELSE: Dùng toán tử ba ngôi dựa theo hàm checkVoucher của bạn
+                    System.out.println(isExist 
+                        ? "Voucher [" + searchVCode + "] exists in the system!" 
+                        : "Voucher không tồn tại!");
+                    break;
+
+                case 3:
+                    // In tổng số lượng bằng hàm countVoucher() và liệt kê chi tiết
+                    System.out.println("Total Vouchers: " + vm.countVoucher());
+                    System.out.println("--------------------");
+                    vm.displayVoucher();
+                    break;
+
+                case 0:
+                    System.out.println("Program ended.");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+
+        } while (choice != 0);
+
+        sc.close();
+    }
+}
