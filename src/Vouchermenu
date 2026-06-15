@@ -6,89 +6,103 @@ import model.voucher.Voucher;
 
 public class VoucherMenu {
 
-    public static void main(String[] args) {
+    private VoucherManagement voucherManagement;
+    private Scanner sc;
 
-        Scanner sc = new Scanner(System.in);
-        VoucherManagement vm = new VoucherManagement();
+    public VoucherMenu() {
+        voucherManagement = new VoucherManagement();
+        sc = new Scanner(System.in);
+    }
+
+    public void showMenu() {
 
         int choice;
 
         do {
             System.out.println("\n===== VOUCHER MENU =====");
             System.out.println("1. Add Voucher");
-            System.out.println("2. Search Voucher");
-            System.out.println("3. Display Vouchers");
+            System.out.println("2. Check Voucher");
+            System.out.println("3. Display Voucher List");
+            System.out.println("4. Count Voucher");
             System.out.println("0. Exit");
             System.out.print("Choose: ");
 
-            choice = sc.nextInt();
-            sc.nextLine(); // Clear bộ nhớ đệm tránh trôi lệnh khi nhập chuỗi tiếp theo
+            choice = Integer.parseInt(sc.nextLine());
 
             switch (choice) {
 
                 case 1:
-                    System.out.print("Voucher Code: ");
-                    String vCode = sc.nextLine();
-
-                    System.out.print("Discount Type (e.g., Percentage / Fixed): ");
-                    String vType = sc.nextLine();
-
-                    System.out.print("Discount Value: ");
-                    double vValue = sc.nextDouble();
-                    sc.nextLine(); // Clear bộ nhớ đệm
-
-                    System.out.print("Start Date (yyyy-MM-dd): ");
-                    String sDate = sc.nextLine();
-
-                    System.out.print("End Date (yyyy-MM-dd): ");
-                    String eDate = sc.nextLine();
-
-                    System.out.print("Usage Limit: ");
-                    int limit = sc.nextInt();
-
-                    System.out.print("Status (true = Active / false = Inactive): ");
-                    boolean status = sc.nextBoolean();
-                    sc.nextLine(); // Clear bộ nhớ đệm
-
-                    // Khởi tạo đối tượng Voucher khớp chuẩn 7 tham số theo Constructor của bạn
-                    Voucher voucher = new Voucher(vCode, vType, vValue, sDate, eDate, limit, status);
-                    
-                    // Gọi hàm add từ lớp quản lý
-                    vm.addVoucher(voucher);
-
-                    System.out.println("Voucher added successfully!");
+                    addVoucher();
                     break;
 
                 case 2:
-                    System.out.print("Enter Voucher Code to search: ");
-                    String searchVCode = sc.nextLine();
-
-                    // Gọi hàm kiểm tra có kiểu dữ liệu trả về là boolean từ VoucherManagement
-                    boolean isExist = vm.checkVoucher(searchVCode);
-
-                    // ĐÃ BỎ IF-ELSE: Dùng toán tử ba ngôi dựa theo hàm checkVoucher của bạn
-                    System.out.println(isExist 
-                        ? "Voucher [" + searchVCode + "] exists in the system!" 
-                        : "Voucher không tồn tại!");
+                    checkVoucher();
                     break;
 
                 case 3:
-                    // In tổng số lượng bằng hàm countVoucher() và liệt kê chi tiết
-                    System.out.println("Total Vouchers: " + vm.countVoucher());
-                    System.out.println("--------------------");
-                    vm.displayVoucher();
+                    voucherManagement.displayVoucher();
+                    break;
+
+                case 4:
+                    System.out.println("Total Voucher: "
+                            + voucherManagement.countVoucher());
                     break;
 
                 case 0:
-                    System.out.println("Program ended.");
+                    System.out.println("Program Ended!");
                     break;
 
                 default:
-                    System.out.println("Invalid choice!");
+                    System.out.println("Invalid Choice!");
             }
 
         } while (choice != 0);
+    }
 
-        sc.close();
+    private void addVoucher() {
+
+        System.out.print("Voucher Code: ");
+        String code = sc.nextLine();
+
+        System.out.print("Discount Type: ");
+        String type = sc.nextLine();
+
+        System.out.print("Discount Value: ");
+        double value = Double.parseDouble(sc.nextLine());
+
+        System.out.print("Start Date: ");
+        String startDate = sc.nextLine();
+
+        System.out.print("End Date: ");
+        String endDate = sc.nextLine();
+
+        System.out.print("Usage Limit: ");
+        int limit = Integer.parseInt(sc.nextLine());
+
+        Voucher voucher = new Voucher(
+                code,
+                type,
+                value,
+                startDate,
+                endDate,
+                limit,
+                true
+        );
+
+        voucherManagement.addVoucher(voucher);
+
+        System.out.println("Voucher Added Successfully!");
+    }
+
+    private void checkVoucher() {
+
+        System.out.print("Enter Voucher Code: ");
+        String code = sc.nextLine();
+
+        if (voucherManagement.checkVoucher(code)) {
+            System.out.println("Voucher Exists!");
+        } else {
+            System.out.println("Voucher Not Found!");
+        }
     }
 }
