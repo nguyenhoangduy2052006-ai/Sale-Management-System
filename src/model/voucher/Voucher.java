@@ -2,30 +2,30 @@ package model.voucher;
 
 public class Voucher {
 
+    private String voucherID;
     private String voucherCode;
-    private String discountType;
     private double discountValue;
-    private String voucherStartDate;
-    private String voucherEndDate;
-    private int usageLimit;
-    private boolean voucherStatus;
+    private String expiryDate;
+    private boolean status;
 
-    // Constructor
-    public Voucher(String voucherCode, String discountType,
-                   double discountValue, String voucherStartDate,
-                   String voucherEndDate, int usageLimit,
-                   boolean voucherStatus) {
-
+    public Voucher(String voucherID, String voucherCode,
+                   double discountValue, String expiryDate,
+                   boolean status) {
+        this.voucherID = voucherID;
         this.voucherCode = voucherCode;
-        this.discountType = discountType;
         this.discountValue = discountValue;
-        this.voucherStartDate = voucherStartDate;
-        this.voucherEndDate = voucherEndDate;
-        this.usageLimit = usageLimit;
-        this.voucherStatus = voucherStatus;
+        this.expiryDate = expiryDate;
+        this.status = status;
     }
 
-    // Getter & Setter
+    public String getVoucherID() {
+        return voucherID;
+    }
+
+    public void setVoucherID(String voucherID) {
+        this.voucherID = voucherID;
+    }
+
     public String getVoucherCode() {
         return voucherCode;
     }
@@ -42,13 +42,20 @@ public class Voucher {
         this.discountValue = discountValue;
     }
 
-    // Kiểm tra voucher còn hiệu lực
-    public boolean validateVoucher() {
-        return voucherStatus;
+    public String getExpiryDate() {
+        return expiryDate;
     }
 
-    // Tính số tiền được giảm
-    public double applyDiscount(double totalAmount) {
-        return totalAmount * discountValue / 100;
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
+
