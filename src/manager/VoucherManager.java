@@ -3,61 +3,57 @@ package manager;
 import model.voucher.Voucher;
 import java.util.ArrayList;
 
-public class VoucherManagement {
+public class VoucherManager {
 
-    // Encapsulation
     private ArrayList<Voucher> voucherList;
 
-    // Constructor
-    public VoucherManagement() {
+    public VoucherManager() {
         voucherList = new ArrayList<>();
     }
 
-    // Thêm voucher
+    // Add
     public void addVoucher(Voucher voucher) {
         voucherList.add(voucher);
     }
 
-    // Kiểm tra voucher tồn tại
-    public boolean checkVoucher(String voucherCode) {
-
-        for (Voucher voucher : voucherList) {
-
-            if (voucher.getVoucherCode().equals(voucherCode)) {
-                return true;
+    // Search
+    public Voucher searchVoucher(String code) {
+        for (Voucher v : voucherList) {
+            if (v.getVoucherCode().equalsIgnoreCase(code)) {
+                return v;
             }
+        }
+        return null;
+    }
+
+    // Update
+    public boolean updateVoucher(String code, double discountValue) {
+        Voucher v = searchVoucher(code);
+
+        if (v != null) {
+            v.setDiscountValue(discountValue);
+            return true;
         }
 
         return false;
     }
 
-    // Đếm số lượng voucher
-    public int countVoucher() {
-        return voucherList.size();
-    }
+    // Remove
+    public boolean removeVoucher(String code) {
+        Voucher v = searchVoucher(code);
 
-    // Hiển thị danh sách voucher
-    public void displayVoucher() {
-
-        for (Voucher voucher : voucherList) {
-
-            System.out.println("Voucher Code: "
-                    + voucher.getVoucherCode());
-
-            System.out.println("Discount Value: "
-                    + voucher.getDiscountValue());
-
-            System.out.println("--------------------");
+        if (v != null) {
+            voucherList.remove(v);
+            return true;
         }
+
+        return false;
     }
 
-    // Getter
-    public ArrayList<Voucher> getVoucherList() {
-        return voucherList;
-    }
-
-    // Setter
-    public void setVoucherList(ArrayList<Voucher> voucherList) {
-        this.voucherList = voucherList;
+    // Display
+    public void displayVouchers() {
+        for (Voucher v : voucherList) {
+            System.out.println(v);
+        }
     }
 }
