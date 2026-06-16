@@ -6,7 +6,7 @@ public class Laptop extends Product{
     private  String cpu;
     private String storage;
     
-    public Laptop (String productId, String productName, String category, double price, int quantity) {
+    public Laptop (String productId, String productName, String category, double price, int quantity, String ram, String cpu, String storage) {
         super(productId, productName, category, price, quantity);
         this.ram=ram;
         this.cpu=cpu;

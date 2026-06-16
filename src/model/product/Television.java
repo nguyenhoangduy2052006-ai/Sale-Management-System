@@ -5,7 +5,7 @@ public class Television extends Product {
     private String screenSize;
     private String resolution;
     
-    public Television (String productId, String productName, String category, double price, int quantity) {
+    public Television (String productId, String productName, String category, double price, int quantity, String screenSize, String resolution) {
         super(productId, productName, category, price, quantity);
         this.screenSize=screenSize;
         this.resolution=resolution;

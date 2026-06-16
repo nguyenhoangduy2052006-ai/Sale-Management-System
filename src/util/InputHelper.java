@@ -12,7 +12,67 @@ public class InputHelper {
             } 
             catch (NumberFormatException e) {
                 System.out.print("Invalid number. Enter again: ");
+            }  
+        }
+    }
+    
+    public static int readInt(Scanner scanner, int min) {
+
+        while (true) {
+
+            int value = readInt(scanner);
+
+            if (value >= min) {
+                return value;
             }
+
+            System.out.print("Value must be >= " + min + ". Enter again: ");
+        }
+    }
+    
+    public static int readInt(Scanner scanner, int min, int max) {
+
+        while (true) {
+
+            int value = readInt(scanner);
+
+            if (value >= min && value <= max) {
+                return value;
+            }
+
+            System.out.print(
+                    "Value must be between "
+                    + min + " and "
+                    + max
+                    + ". Enter again: "
+            );
+        }
+    }
+    
+    // Ham check double number
+    
+    public static double readDouble(Scanner scanner) {
+
+        while (true) {
+            try {
+                return Double.parseDouble(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.print("Invalid number. Enter again: ");
+            }
+        }
+    }
+    
+    public static double readDouble(Scanner scanner, double min) {
+
+        while (true) {
+
+            double value = readDouble(scanner);
+
+            if (value >= min) {
+                return value;
+            }
+
+            System.out.print("Value must be >= " + min + ". Enter again: ");
         }
     }
     
