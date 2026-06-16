@@ -23,23 +23,23 @@ public abstract class Product { // Abstract giup xac dinh cu the tung san pham
 
     // Getters
     public String getProductId() {
-        return this.productId;
+        return productId;
     }
 
     public String getProductName() {
-        return this.productName;
+        return productName;
     }
 
     public String getCategory() {
-        return this.category;
+        return category;
     }
 
     public double getPrice() {
-        return this.price;
+        return price;
     }
 
     public int getQuantity() {
-        return this.quantity;
+        return quantity;
     }
 
     // Setters
@@ -65,6 +65,11 @@ public abstract class Product { // Abstract giup xac dinh cu the tung san pham
         } else {
             System.out.println("Error. Quantity must be greater than 0 or equal 0.");
         }
+    }
+    @Override
+    public String toString () {
+        return String.format("ProductId= %s, Product Name = %s, Category= %s, Price= %.2f, Quantity= %d",
+                productId, productName, category, price, quantity);
     }
 
 }

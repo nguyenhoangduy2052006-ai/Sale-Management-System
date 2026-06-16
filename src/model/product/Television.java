@@ -1,13 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package model.product;
 
-/**
- *
- * @author Nguyen Hoang Duy
- */
-public class Television {
+public class Television extends Product {
+    private String screenSize;
+    private String resolution;
     
+    public Television (String productId, String productName, String category, double price, int quantity) {
+        super(productId, productName, category, price, quantity);
+        this.screenSize=screenSize;
+        this.resolution=resolution;
+        
+    }
+    
+    public String getScreenSize () {
+        return screenSize;
+    }
+    public String getResolution () {
+        return resolution;
+    }
+    
+    public void setScreenSize (String screenSize) {
+        this.screenSize=screenSize;
+    }
+    public void setResolution (String resolution) {
+        this.resolution=resolution;
+    }
+    
+    @Override
+    public String toString () {
+        return super.toString() + String.format("| Screen Size: %s | Resolution: %s |", 
+                screenSize, resolution);
+    }
 }

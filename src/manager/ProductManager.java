@@ -1,13 +1,13 @@
 package manager;
 
-import Entity.Product;
+import model.product.Product;
 import java.util.ArrayList;
 
-public class ProductManagement {
+public class ProductManager {
 
     private ArrayList<Product> productList; // Khai bao bien
 
-    public ProductManagement() {
+    public ProductManager() {
         this.productList = new ArrayList<>();
     }
 
@@ -22,9 +22,9 @@ public class ProductManagement {
     }
 
     // addNewProduct fuction
-    public boolean addNewProdtuct(Product newProduct) {
+    public boolean addNewProduct(Product newProduct) {
         if (findProductById(newProduct.getProductId()) != null) {
-            System.out.println("Error. Productt Id was existed: " + newProduct.getProductId());
+            System.out.println("Error. Productt Id existed: " + newProduct.getProductId());
             return false;
         } else {
             this.productList.add(newProduct);
@@ -33,7 +33,7 @@ public class ProductManagement {
     }
 
     // updateProductInfo
-    public boolean updateProductInfo(String productId, String newName, double newPrice) {
+    public boolean updateProductInfo(String productId, String newName, String category, double newPrice, int newQuantity) {
         Product p = findProductById(productId);
         if (p == null) {
             System.out.println("Error. Not found product to update.");
@@ -41,6 +41,8 @@ public class ProductManagement {
         } else {
             p.setProductName(newName);
             p.setPrice(newPrice);
+            p.setCategory(category);
+            p.setQuantity(newQuantity);
             return true;
         }
     }

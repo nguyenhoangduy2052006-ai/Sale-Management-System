@@ -1,13 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package model.product;
 
-/**
- *
- * @author Nguyen Hoang Duy
- */
-public class Laptop {
+public class Laptop extends Product{
+    private String ram;
+    private  String cpu;
+    private String storage;
     
+    public Laptop (String productId, String productName, String category, double price, int quantity) {
+        super(productId, productName, category, price, quantity);
+        this.ram=ram;
+        this.cpu=cpu;
+        this.storage=storage;
+    }
+    public String getRam () {
+        return ram;
+    }
+    public String getCPU () {
+        return cpu;
+    }
+    public String getStorage () {
+        return cpu;
+    }
+    
+    public void setRam (String ram) {
+        this.ram=ram;
+    }
+    public void setCPU (String cpu) {
+        this.cpu=cpu;
+    }
+    public void setStorage (String storage) {
+        this.storage=storage;
+    }
+    @Override
+    public String toString () {
+        return super.toString() + String.format("| RAM: %s || CPU: %s | Storage: %s",
+                ram, cpu, storage);
+    }
 }
