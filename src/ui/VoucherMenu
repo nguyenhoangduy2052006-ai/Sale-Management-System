@@ -1,1 +1,64 @@
-Voucher
+package ui;
+
+import java.util.Scanner;
+import manager.VoucherManager;
+
+public class VoucherMenu {
+
+    private VoucherManager voucherManager;
+    private Scanner sc;
+
+    public VoucherMenu() {
+        voucherManager = new VoucherManager();
+        sc = new Scanner(System.in);
+    }
+
+    public void showMenu() {
+        int choice;
+
+        do {
+            System.out.println("\n===== VOUCHER MENU =====");
+            System.out.println("1. Add Voucher");
+            System.out.println("2. Update Voucher");
+            System.out.println("3. Remove Voucher");
+            System.out.println("4. Search Voucher");
+            System.out.println("5. Display Vouchers");
+            System.out.println("0. Exit");
+            System.out.print("Choose: ");
+
+            choice = sc.nextInt();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.println("Add Voucher");
+                    break;
+
+                case 2:
+                    System.out.println("Update Voucher");
+                    break;
+
+                case 3:
+                    System.out.println("Remove Voucher");
+                    break;
+
+                case 4:
+                    System.out.println("Search Voucher");
+                    break;
+
+                case 5:
+                    voucherManager.displayVouchers();
+                    break;
+
+                case 0:
+                    System.out.println("Exit Program");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+
+        } while (choice != 0);
+    }
+}
+
