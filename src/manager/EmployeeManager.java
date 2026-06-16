@@ -1,146 +1,113 @@
-package Management;
+package manager; // Khớp chính xác với tên thư mục viết thường bên trái của ông
 
-import Entity.Employee; // Khai báo để sử dụng thực thể Employee từ package Entity
+import model.employee.Employee; // Sửa lại đường dẫn import đúng vị trí gói model.employee
 import java.util.ArrayList;
-import java.util.Scanner;
 
-public class EmployeeManagement {
-
-    // Khai báo danh sách lưu trữ nhân viên trong bộ nhớ
+// Lớp quản lý xử lý các chức năng nghiệp vụ (CRUD) của Nhân viên
+public class EmployeeManager { // Đã đổi tên class trùng khít 100% với tên file EmployeeManager.java
+    // Sử dụng kỹ thuật ArrayList để lưu trữ danh sách nhân viên trong bộ nhớ máy
     private ArrayList<Employee> employeeList;
 
-    public EmployeeManagement() {
-        employeeList = new ArrayList<>();
+    // Hàm khởi tạo tạo mới một danh sách rỗng
+    public EmployeeManager() {
+        this.employeeList = new ArrayList<>();
     }
 
-    // =========================================================
-    // 1. HÀM HIỂN THỊ MENU ĐIỀU HƯỚNG (ĐÃ KẾT NỐI TÍNH NĂNG THẬT)
-    // =========================================================
-    public void displayMenu(Scanner sc) {
-        int choice;
-        do {
-            System.out.println("\n----------------------------------");
-            System.out.println("     EMPLOYEE MANAGEMENT MENU     ");
-            System.out.println("----------------------------------");
-            System.out.println("1. Add a new employee");
-            System.out.println("2. Update employee information");
-            System.out.println("3. Remove an employee");
-            System.out.println("4. List all employees");
-            System.out.println("0. Back to Main Menu ");
-            System.out.println("----------------------------------");
-            System.out.print("Please enter your choice (0-4): ");
-
-            choice = sc.nextInt();
-            sc.nextLine(); // Xóa bộ đệm sau khi nhập số
-
-            switch (choice) {
-                case 1:
-                    addEmployee(sc); // Kích hoạt chức năng thêm thật
-                    break;
-                case 2:
-                    updateEmployeeRole(sc); // Kích hoạt chức năng sửa thật
-                    break;
-                case 3:
-                    removeEmployee(sc); // Kích hoạt chức năng xóa thật
-                    break;
-                case 4:
-                    listAllEmployees(); // Kích hoạt chức năng xem danh sách thật
-                    break;
-                case 0:
-                    System.out.println("Dang quay lai Man hinh chinh...");
-                    break;
-                default:
-                    System.out.println("Lua chon khong hop le!");
+    // Chức năng: Thêm nhân viên mới vào hệ thống
+    public boolean addEmployee(Employee emp) {
+        // Duyệt qua toàn bộ danh sách để kiểm tra trùng mã ID
+        for (Employee e : employeeList) {
+            // Nếu mã ID đã tồn tại (không phân biệt chữ hoa chữ thường)
+            if (e.getEmployeeID().equalsIgnoreCase(emp.getEmployeeID())) {
+                // Trả về false báo hiệu thêm thất bại
+                return false; 
             }
-        } while (choice != 0);
-    }
-
-    // =========================================================
-    // 2. CÁC HÀM XỬ LÝ CHỨC NĂNG CHI TIẾT
-    // =========================================================
-    // Chức năng 1: Thêm nhân viên mới
-    public void addEmployee(Scanner sc) {
-        System.out.println("\n--- Add New Employee ---");
-        System.out.print("Enter Employee ID: ");
-        String id = sc.nextLine();
-
-        if (findEmployeeById(id) != null) {
-            System.out.println("Error: Employee ID already exists!");
-            return;
         }
-
-        System.out.print("Enter Employee Name: ");
-        String name = sc.nextLine();
-        System.out.print("Enter Role: ");
-        String role = sc.nextLine();
-        System.out.print("Enter Phone Number: ");
-        String phone = sc.nextLine();
-        System.out.print("Enter Password: ");
-        String password = sc.nextLine();
-
-        Employee newEmp = new Employee(id, name, role, phone, password);
-        employeeList.add(newEmp);
-        System.out.println("=> Employee added successfully!");
+        // Thêm nhân viên mới vào ArrayList nếu không trùng ID
+        employeeList.add(emp);
+        // Trả về true báo hiệu thành công
+        return true;
     }
 
-    // Chức năng 4: Xem danh sách nhân viên dưới dạng bảng
-    public void listAllEmployees() {
-        System.out.println("\n--- Employee List ---");
+    // Chức năng: Cập nhật thông tin nhân viên theo ID
+    public boolean updateEmployee(String id, String newName, String newRole, String newPhone, String newPassword) {
+        // Duyệt tìm nhân viên cần sửa trong danh sách
+        for (Employee e : employeeList) {
+            // Nếu tìm thấy nhân viên có ID trùng khớp
+            if (e.getEmployeeID().equalsIgnoreCase(id)) {
+                // Tiến hành ghi đè dữ liệu mới bằng các hàm setter
+                e.setEmployeeName(newName);
+                e.setRole(newRole);
+                e.setPhoneNumber(newPhone);
+                e.setPassword(newPassword);
+                // Trả về true báo hiệu cập nhật thành công
+                return true;
+            }
+        }
+        // Trả về false nếu duyệt hết danh sách mà không thấy ID này
+        return false;
+    }
+
+    // Chức năng: Xóa nhân viên khỏi hệ thống theo ID
+    public boolean removeEmployee(String id) {
+        // Duyệt tìm nhân viên cần xóa trong danh sách
+        for (Employee e : employeeList) {
+            // Nếu tìm thấy nhân viên có ID trùng khớp
+            if (e.getEmployeeID().equalsIgnoreCase(id)) {
+                // Thực hiện xóa đối tượng này ra khỏi danh sách bộ nhớ
+                employeeList.remove(e);
+                // Trả về true báo hiệu xóa thành công
+                return true;
+            }
+        }
+        // Trả về false nếu không tìm thấy nhân viên cần xóa
+        return false;
+    }
+
+    // Tuân thủ nghiêm ngặt yêu cầu: Tìm kiếm theo cả ID và Tên nhân viên
+    public ArrayList<Employee> searchEmployee(String keyword) {
+        // Khởi tạo một danh sách phụ để chứa các kết quả tìm thấy
+        ArrayList<Employee> results = new ArrayList<>();
+        // Duyệt qua từng nhân viên trong danh sách tổng
+        for (Employee e : employeeList) {
+            // Kiểm tra xem ID có trùng khớp hoặc Tên có chứa từ khóa tìm kiếm hay không
+            if (e.getEmployeeID().equalsIgnoreCase(keyword) || 
+                e.getEmployeeName().toLowerCase().contains(keyword.toLowerCase())) {
+                // Nếu thỏa mãn thì thêm vào danh sách kết quả
+                results.add(e);
+            }
+        }
+        // Trả về danh sách kết quả tìm kiếm được
+        return results;
+    }
+
+    // Chức năng: Hiển thị toàn bộ danh sách nhân viên hiện tại
+    public void displayEmployees() {
+        // Nếu danh sách hiện tại đang trống
         if (employeeList.isEmpty()) {
-            System.out.println("No employees found.");
+            System.out.println("No employees available.");
             return;
         }
+        // Hiển thị tiêu đề cột định dạng bảng
+        System.out.println("-------------------------------------------------------------------------");
         System.out.printf("| %-10s | %-20s | %-15s | %-15s |\n", "ID", "Name", "Role", "Phone");
-        System.out.println("-----------------------------------------------------------------------");
-        for (Employee emp : employeeList) {
-            emp.displayEmployeeInfo();
+        System.out.println("-------------------------------------------------------------------------");
+        // Duyệt và in ra chuỗi định dạng của từng nhân viên
+        for (Employee e : employeeList) {
+            System.out.println(e.toString());
         }
+        System.out.println("-------------------------------------------------------------------------");
     }
-
-    // Chức năng 2: Cập nhật chức vụ và số điện thoại
-    public void updateEmployeeRole(Scanner sc) {
-        System.out.println("\n--- Update Employee Information ---");
-        System.out.print("Enter Employee ID to update: ");
-        String id = sc.nextLine();
-
-        Employee emp = findEmployeeById(id);
-        if (emp != null) {
-            System.out.print("Enter new Role (Current: " + emp.getRole() + "): ");
-            String newRole = sc.nextLine();
-            emp.setRole(newRole);
-
-            System.out.print("Enter new Phone Number (Current: " + emp.getPhoneNumber() + "): ");
-            String newPhone = sc.nextLine();
-            emp.setPhoneNumber(newPhone);
-
-            System.out.println("=> Employee information updated successfully!");
-        } else {
-            System.out.println("Error: Employee not found.");
-        }
-    }
-
-    // Chức năng 3: Xóa nhân viên khỏi hệ thống
-    public void removeEmployee(Scanner sc) {
-        System.out.println("\n--- Remove Employee ---");
-        System.out.print("Enter Employee ID to remove: ");
-        String id = sc.nextLine();
-
-        Employee emp = findEmployeeById(id);
-        if (emp != null) {
-            employeeList.remove(emp);
-            System.out.println("=> Employee removed successfully!");
-        } else {
-            System.out.println("Error: Employee not found.");
-        }
-    }
-
-    // Hàm phụ trợ: Tìm kiếm nhân viên nhanh bằng ID
-    private Employee findEmployeeById(String id) {
-        for (Employee emp : employeeList) {
-            if (emp.getEmployeeID().equalsIgnoreCase(id)) {
-                return emp;
+    
+    // Hàm bổ trợ: Tìm kiếm đối tượng nhân viên gốc nhanh bằng ID chính xác
+    public Employee findById(String id) {
+        for (Employee e : employeeList) {
+            if (e.getEmployeeID().equalsIgnoreCase(id)) {
+                // Trả về đối tượng nhân viên tìm thấy
+                return e;
             }
         }
+        // Không tìm thấy trả về null
         return null;
     }
 }
