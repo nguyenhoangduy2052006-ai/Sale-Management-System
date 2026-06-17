@@ -5,10 +5,15 @@ import java.util.ArrayList;
 
 public class ProductManager {
 
-    private ArrayList<Product> productList; // Khai bao bien
+    private final ArrayList<Product> productList; // Khai bao bien
 
     public ProductManager() {
         this.productList = new ArrayList<>();
+    }
+    
+    // getter
+    public ArrayList<Product> getProductList (){
+        return productList;
     }
 
     // findProductById Function 
@@ -33,18 +38,25 @@ public class ProductManager {
     }
 
     // updateProductInfo
-    public boolean updateProductInfo(String productId, String newName, String category, double newPrice, int newQuantity) {
+    public boolean updateProductInfo(String productId, String newName, double newPrice, int newQuantity) {
         Product p = findProductById(productId);
         if (p == null) {
             System.out.println("Error. Not found product to update.");
             return false;
-        } else {
+        } 
+        if (newName != null) {
             p.setProductName(newName);
-            p.setPrice(newPrice);
-            p.setCategory(category);
-            p.setQuantity(newQuantity);
-            return true;
         }
+
+        if (newPrice > 0) {
+            p.setPrice(newPrice);
+        }
+
+        if (newQuantity != -1) {
+            p.setQuantity(newQuantity);
+        }
+
+        return true;
     }
 
     //removeProduct

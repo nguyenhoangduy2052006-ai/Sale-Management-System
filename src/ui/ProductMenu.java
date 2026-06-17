@@ -52,9 +52,6 @@ public class ProductMenu {
                 case 5:
                     searchProductById();
                     break;
-                case 6:
-                    searchProductByName();
-                    break;
                 case 0:
                     System.out.println("Returning to main menu.");
                     break;
@@ -140,7 +137,7 @@ public class ProductMenu {
 
         Product p = productManager.findProductById(id);
         if (p == null) {
-            System.out.println("❌ Product not found!");
+            System.out.println("Product not found!");
             return;
         }
 
@@ -153,9 +150,9 @@ public class ProductMenu {
         double newPrice = InputHelper.readDouble(scanner, 0);
 
         System.out.print("New Quantity (-1 to skip): ");
-        int newQty = InputHelper.readInt(scanner, -1);
+        int newQuantity = InputHelper.readInt(scanner, -1);
 
-        productManager.updateProductInfo(id, newName.isEmpty() ? null : newName, newPrice, newQty);
+        productManager.updateProductInfo(id, newName.isEmpty() ? null : newName, newPrice, newQuantity);
     }
     
     // Remove product
@@ -174,7 +171,17 @@ public class ProductMenu {
         if (p != null) {
             System.out.println("Found: " + p);
         } else {
-            System.out.println("❌ Product not found!");
+            System.out.println(" Product not found!");
+        }
+    }
+    
+    // Display Product list
+    private void displayProductList () {
+        System.out.println("----- PRODUCT LIST -----\n");
+        if (productManager.getProductList().isEmpty()) {
+            System.out.println("No products available.");
+        } else {
+            productManager.displayProductList();
         }
     }
 }
