@@ -5,12 +5,12 @@ import java.util.ArrayList;        // Import thư viện mảng động ArrayLis
 
 // Lớp xử lý nghiệp vụ (CRUD) - Thêm, Sửa, Xóa, Tìm kiếm vật tư kho
 public class InventoryManager {
-   // Khai báo mảng động ArrayList để lưu danh sách các đối tượng Inventory
+    // Khai báo mảng động ArrayList để lưu danh sách các đối tượng Inventory
     //  private final 
+
     private ArrayList<Inventory> inventoryList;
 
     // Hàm khởi tạo: Khi tạo một Manager mới thì cấp phát bộ nhớ cho danh sách luôn
-    
     public InventoryManager() {
         this.inventoryList = new ArrayList<>();
     }
@@ -63,29 +63,17 @@ public class InventoryManager {
         ArrayList<Inventory> results = new ArrayList<>(); // Tạo mảng phụ chứa kết quả tìm thấy
         for (Inventory i : inventoryList) {
             // Kiểm tra nếu ID trùng khớp HOẶC Tên sản phẩm có chứa từ khóa (chuyển hết về chữ thường)
-            if (i.getInventoryID().equalsIgnoreCase(keyword) || 
-                i.getItemName().toLowerCase().contains(keyword.toLowerCase())) {
+            if (i.getInventoryID().equalsIgnoreCase(keyword)
+                    || i.getItemName().toLowerCase().contains(keyword.toLowerCase())) {
                 results.add(i); // Thêm phần tử thỏa mãn vào danh sách kết quả
             }
         }
         return results; // Trả về danh sách kết quả (có thể rỗng nếu không tìm thấy gì)
     }
 
-    // CHỨC NĂNG R: READ - XUẤT TOÀN BỘ DANH SÁCH RA MÀN HÌNH
-    public void displayInventory() {
-        if (inventoryList.isEmpty()) { // Kiểm tra nếu danh sách rỗng
-            System.out.println("Inventory is empty.");
-            return; // Thoát hàm luôn, không cần chạy đoạn dưới
-        }
-        // In tiêu đề cột của bảng
-        System.out.println("-------------------------------------------------------------------------");
-        System.out.printf("| %-12s | %-25s | %-10s | %-15s |\n", "Inventory ID", "Item Name", "Quantity", "Location");
-        System.out.println("-------------------------------------------------------------------------");
-        // Duyệt danh sách và in từng dòng ra bằng hàm toString() đã viết ở lớp Model
-        for (Inventory i : inventoryList) {
-            System.out.println(i.toString());
-        }
-        System.out.println("-------------------------------------------------------------------------");
+    // Trả về toàn bộ danh sách Inventory
+    public ArrayList<Inventory> getAllInventory() {
+        return inventoryList;
     }
 
     // HÀM PHỤ TRỢ: Tìm nhanh đối tượng gốc bằng ID (Dùng để kiểm tra nhanh trong file Menu)

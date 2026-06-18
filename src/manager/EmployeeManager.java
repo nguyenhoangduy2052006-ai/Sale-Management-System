@@ -6,6 +6,7 @@ import java.util.ArrayList;
 // Lớp quản lý xử lý các chức năng nghiệp vụ (CRUD) của Nhân viên
 public class EmployeeManager { // Đã đổi tên class trùng khít 100% với tên file EmployeeManager.java
     // Sử dụng kỹ thuật ArrayList để lưu trữ danh sách nhân viên trong bộ nhớ máy
+
     private final ArrayList<Employee> employeeList;
 
     // Hàm khởi tạo tạo mới một danh sách rỗng
@@ -20,7 +21,7 @@ public class EmployeeManager { // Đã đổi tên class trùng khít 100% với
             // Nếu mã ID đã tồn tại (không phân biệt chữ hoa chữ thường)
             if (e.getEmployeeID().equalsIgnoreCase(emp.getEmployeeID())) {
                 // Trả về false báo hiệu thêm thất bại
-                return false; 
+                return false;
             }
         }
         // Thêm nhân viên mới vào ArrayList nếu không trùng ID
@@ -71,8 +72,8 @@ public class EmployeeManager { // Đã đổi tên class trùng khít 100% với
         // Duyệt qua từng nhân viên trong danh sách tổng
         for (Employee e : employeeList) {
             // Kiểm tra xem ID có trùng khớp hoặc Tên có chứa từ khóa tìm kiếm hay không
-            if (e.getEmployeeID().equalsIgnoreCase(keyword) || 
-                e.getEmployeeName().toLowerCase().contains(keyword.toLowerCase())) {
+            if (e.getEmployeeID().equalsIgnoreCase(keyword)
+                    || e.getEmployeeName().toLowerCase().contains(keyword.toLowerCase())) {
                 // Nếu thỏa mãn thì thêm vào danh sách kết quả
                 results.add(e);
             }
@@ -81,24 +82,10 @@ public class EmployeeManager { // Đã đổi tên class trùng khít 100% với
         return results;
     }
 
-    // Chức năng: Hiển thị toàn bộ danh sách nhân viên hiện tại
-    public void displayEmployees() {
-        // Nếu danh sách hiện tại đang trống
-        if (employeeList.isEmpty()) {
-            System.out.println("No employees available.");
-            return;
-        }
-        // Hiển thị tiêu đề cột định dạng bảng
-        System.out.println("-------------------------------------------------------------------------");
-        System.out.printf("| %-10s | %-20s | %-15s | %-15s |\n", "ID", "Name", "Role", "Phone");
-        System.out.println("-------------------------------------------------------------------------");
-        // Duyệt và in ra chuỗi định dạng của từng nhân viên
-        for (Employee e : employeeList) {
-            System.out.println(e.toString());
-        }
-        System.out.println("-------------------------------------------------------------------------");
+    public ArrayList<Employee> getAllEmployees() {
+        return employeeList;
     }
-    
+
     // Hàm bổ trợ: Tìm kiếm đối tượng nhân viên gốc nhanh bằng ID chính xác
     public Employee findById(String id) {
         for (Employee e : employeeList) {
