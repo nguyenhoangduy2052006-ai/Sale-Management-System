@@ -3,6 +3,7 @@ package model.inventory; // Khai báo vị trí thư mục của file trong dự
 // Lớp đối tượng (Model) đại diện cho 1 sản phẩm/vật tư trong kho
 public class Inventory {
     // Khai báo các thuộc tính (đặc điểm) của vật tư kho
+    //tìm hiểu lại toàn bộ
     private String inventoryID;   // Mã vật tư (Ví dụ: INV001)
     private String itemName;      // Tên sản phẩm/vật tư
     private int quantity;         // Số lượng tồn kho

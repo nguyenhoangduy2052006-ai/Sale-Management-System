@@ -5,15 +5,18 @@ import java.util.ArrayList;        // Import thư viện mảng động ArrayLis
 
 // Lớp xử lý nghiệp vụ (CRUD) - Thêm, Sửa, Xóa, Tìm kiếm vật tư kho
 public class InventoryManager {
-    // Khai báo mảng động ArrayList để lưu danh sách các đối tượng Inventory
+   // Khai báo mảng động ArrayList để lưu danh sách các đối tượng Inventory
+    //  private final 
     private ArrayList<Inventory> inventoryList;
 
     // Hàm khởi tạo: Khi tạo một Manager mới thì cấp phát bộ nhớ cho danh sách luôn
+    
     public InventoryManager() {
         this.inventoryList = new ArrayList<>();
     }
 
     // CHỨC NĂNG C: CREATE - THÊM MỚI VẬT TƯ
+    //giải thích hàm addinventory
     public boolean addInventory(Inventory inv) {
         // Vòng lặp For-each duyệt qua từng sản phẩm 'i' đang có trong danh sách
         for (Inventory i : inventoryList) {
@@ -27,6 +30,7 @@ public class InventoryManager {
     }
 
     // CHỨC NĂNG U: UPDATE - ĐIỀU CHỈNH THÔNG TIN VẬT TƯ
+    //tìm hiểu lại updateinventory
     public boolean updateInventory(String id, String newName, int newQty, String newLocation) {
         // Tìm sản phẩm trong danh sách dựa vào ID truyền vào
         for (Inventory i : inventoryList) {
@@ -54,6 +58,7 @@ public class InventoryManager {
     }
 
     // CHỨC NĂNG R: READ - TÌM KIẾM THEO TỪ KHÓA (ID hoặc Tên)
+    //giải thích cách thức hoạt động của hàm search
     public ArrayList<Inventory> searchInventory(String keyword) {
         ArrayList<Inventory> results = new ArrayList<>(); // Tạo mảng phụ chứa kết quả tìm thấy
         for (Inventory i : inventoryList) {
@@ -84,6 +89,7 @@ public class InventoryManager {
     }
 
     // HÀM PHỤ TRỢ: Tìm nhanh đối tượng gốc bằng ID (Dùng để kiểm tra nhanh trong file Menu)
+    // tìm hiểu lại hàm này
     public Inventory findById(String id) {
         for (Inventory i : inventoryList) {
             if (i.getInventoryID().equalsIgnoreCase(id)) {

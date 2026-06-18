@@ -4,6 +4,7 @@ package model.employee;
 // Lớp Model biểu diễn thông tin của một Nhân viên (Encapsulation)
 public class Employee {
     // Khai báo các thuộc tính private để bảo mật dữ liệu
+    //tìm hiểu lại
     private String employeeID;
     private String employeeName;
     private String role;
@@ -20,6 +21,7 @@ public class Employee {
     }
 
     // Các hàm Getter và Setter để truy cập và cập nhật dữ liệu hợp lệ
+    // tìm hiểu lại getter và setter
     public String getEmployeeID() { return employeeID; }
     public void setEmployeeID(String employeeID) { this.employeeID = employeeID; }
 

@@ -2,6 +2,7 @@ package model.supplier; // Khai báo vị trí thư mục lưu trữ file thực
 
 // Lớp Model mô tả cấu trúc dữ liệu của một Nhà cung cấp
 public class Supplier {
+    //tìm hiểu lại
     private String supplierID;   // Mã nhà cung cấp
     private String supplierName; // Tên công ty/nhà cung cấp
     private String contactName;  // Tên người đại diện liên hệ

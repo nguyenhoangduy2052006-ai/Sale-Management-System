@@ -1,134 +1,74 @@
-package manager; // Khai báo vị trí tệp nằm trong gói quản lý nghiệp vụ chung
+package manager;
 
-import model.supplier.Supplier; // Nhập dữ liệu khuôn mẫu từ gói model.supplier
+import model.supplier.Supplier;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-// Lớp xử lý toàn bộ logic CRUD lưu trữ dữ liệu của Nhà cung cấp
+// Lớp xử lý THUẦN LOGIC CRUD lưu trữ và tương tác dữ liệu của Nhà cung cấp
 public class SupplierManager {
-    // Khai báo mảng động đúng tên biến listSupplier như trong hình ảnh thiết kế của ông
+    // Khai báo mảng động lưu trữ danh sách nhà cung cấp
     private ArrayList<Supplier> listSupplier = new ArrayList<>();
 
-    // 1. CHỨC NĂNG THÊM MỚI (Nhập trực tiếp từ Scanner)
-    public void addSupplier(Scanner scanner) {
-        System.out.println("\n--- Add New Supplier ---");
-        System.out.print("Enter Supplier ID: ");
-        String supplierID = scanner.nextLine().trim(); // Nhập và dùng .trim() để cắt bỏ khoảng trắng thừa ở 2 đầu chuỗi
-
-        // Kiểm tra trùng lặp mã nhà cung cấp trong danh sách bằng hàm getSupplierID()
+    // Hàm bổ trợ: Tìm kiếm thực thể nhà cung cấp theo ID (Dùng nội bộ và cung cấp cho UI)
+    public Supplier findSupplier(String supplierID) {
         for (Supplier s : listSupplier) {
             if (s.getSupplierID().equalsIgnoreCase(supplierID)) {
-                System.out.println("Error: Supplier ID already exists!");
-                return; // Kết thúc hàm sớm nếu bị trùng, chặn không cho chạy tiếp xuống dưới
+                return s; // Trả về đối tượng tìm thấy
             }
         }
-
-        System.out.print("Enter Supplier Name: ");
-        String supplierName = scanner.nextLine().trim();
-        System.out.print("Enter Contact Name: ");
-        String contactName = scanner.nextLine().trim();
-        System.out.print("Enter Phone Number: ");
-        String phoneNumber = scanner.nextLine().trim();
-
-        // Tạo mới thực thể Supplier và đưa trực tiếp vào ArrayList
-        Supplier newSupplier = new Supplier(supplierID, supplierName, contactName, phoneNumber);
-        listSupplier.add(newSupplier);
-        System.out.println("Supplier added successfully!");
+        return null; // Không tìm thấy thì trả về null
     }
 
-    // 2. CHỨC NĂNG CẬP NHẬT THÔNG TIN NHÀ CUNG CẤP
-    public void updateSupplier(Scanner scanner) {
-        System.out.println("\n--- Update Supplier ---");
-        System.out.print("Enter Supplier ID to update: ");
-        String supplierID = scanner.nextLine().trim();
-
-        Supplier supplier = null; // Khởi tạo biến lính canh tạm thời bằng null
-        for (Supplier s : listSupplier) {
-            if (s.getSupplierID().equalsIgnoreCase(supplierID)) {
-                supplier = s; // Gán đối tượng tìm thấy vào biến tạm
-                break;        // Tìm thấy rồi thì ngắt vòng lặp ngay lập tức để tiết kiệm bộ nhớ
-            }
+    // 1. CHỨC NĂNG THÊM MỚI (Nhận đối tượng đã đúc sẵn từ UI)
+    public boolean addSupplier(Supplier supplier) {
+        // Kiểm tra trùng lặp mã nhà cung cấp trước khi add
+        if (findSupplier(supplier.getSupplierID()) != null) {
+            return false; // Trùng mã, thêm thất bại
         }
+        listSupplier.add(supplier);
+        return true; // Thêm thành công
+    }
 
-        // Báo lỗi nếu kết thúc vòng lặp mà biến tạm vẫn bằng null
-        if (supplier == null) {
-            System.out.println("Error: Supplier not found!");
-            return;
+    // 2. CHỨC NĂNG CẬP NHẬT THÔNG TIN (Nhận các tham số dữ liệu chuẩn từ UI)
+    public boolean updateSupplier(String id, String name, String contact, String phone) {
+        Supplier s = findSupplier(id);
+        if (s == null) {
+            return false; // Không tìm thấy nhà cung cấp cần sửa
         }
-
-        // XỬ LÝ NHẬP THÔNG TIN MỚI THÔNG MINH: Nếu nhấn Enter bỏ trống -> Giữ nguyên giá trị cũ
-        System.out.print("Enter New Supplier Name (Current: " + supplier.getSupplierName() + "): ");
-        String newName = scanner.nextLine().trim();
-        if (!newName.isEmpty()) { // Kiểm tra người dùng có gõ chữ hay không (không rỗng mới cập nhật)
-            supplier.setSupplierName(newName);
-        }
-
-        System.out.print("Enter New Contact Name (Current: " + supplier.getContactName() + "): ");
-        String newContact = scanner.nextLine().trim();
-        if (!newContact.isEmpty()) {
-            supplier.setContactName(newContact);
-        }
-
-        System.out.print("Enter New Phone Number (Current: " + supplier.getPhoneNumber() + "): ");
-        String newPhone = scanner.nextLine().trim();
-        if (!newPhone.isEmpty()) {
-            supplier.setPhoneNumber(newPhone);
-        }
-
-        System.out.println("Supplier updated successfully!");
+        // Tiến hành ghi đè dữ liệu mới
+        s.setSupplierName(name);
+        s.setContactName(contact);
+        s.setPhoneNumber(phone);
+        return true; // Cập nhật thành công
     }
 
     // 3. CHỨC NĂNG XÓA BỎ NHÀ CUNG CẤP
-    public void deleteSupplier(Scanner scanner) {
-        System.out.println("\n--- Delete Supplier ---");
-        System.out.print("Enter Supplier ID to delete: ");
-        String supplierID = scanner.nextLine().trim();
-
-        // Sử dụng biến chạy index để thực hiện xóa khỏi ArrayList
+    public boolean deleteSupplier(String supplierID) {
         for (int i = 0; i < listSupplier.size(); i++) {
             if (listSupplier.get(i).getSupplierID().equalsIgnoreCase(supplierID)) {
-                listSupplier.remove(i); // Xóa bản ghi
-                System.out.println("Supplier deleted successfully!");
-                return; // Đã xóa xong thì dừng luôn hàm
+                listSupplier.remove(i); // Xóa bản ghi khỏi ArrayList
+                return true; // Xóa thành công
             }
         }
-        System.out.println("Error: Supplier not found!");
+        return false; // Không tìm thấy để xóa
     }
 
-    // 4. CHỨC NĂNG TÌM KIẾM THEO TỪ KHÓA (ID hoặc Tên)
-    public void searchSupplier(Scanner scanner) {
-        System.out.println("\n--- Search Supplier ---");
-        System.out.print("Enter Keyword (ID or Name) to search: ");
-        String keyword = scanner.nextLine().trim().toLowerCase(); // Đưa hết từ khóa về chữ thường
-
-        boolean found = false; // Đặt cờ hiệu báo trạng thái tìm kiếm
+    // 4. CHỨC NĂNG TÌM KIẾM THEO TỪ KHÓA (Trả về 1 danh sách các kết quả khớp)
+    public ArrayList<Supplier> searchSupplier(String keyword) {
+        ArrayList<Supplier> searchResults = new ArrayList<>();
+        String kw = keyword.toLowerCase();
+        
         for (Supplier s : listSupplier) {
-            // Kiểm tra từ khóa xuất hiện trong chuỗi ID hoặc chuỗi Tên Nhà cung cấp
-            if (s.getSupplierID().toLowerCase().contains(keyword) || 
-                s.getSupplierName().toLowerCase().contains(keyword)) {
-                System.out.println(s.toString()); // Xuất thông tin dòng dữ liệu tìm thấy
-                found = true; // Bật cờ hiệu lên true
+            // Nếu ID hoặc Tên chứa từ khóa thì add vào danh sách kết quả
+            if (s.getSupplierID().toLowerCase().contains(kw) || 
+                s.getSupplierName().toLowerCase().contains(kw)) {
+                searchResults.add(s);
             }
         }
-
-        if (!found) { // Nếu quét hết danh sách mà cờ vẫn false
-            System.out.println("No matching supplier found.");
-        }
+        return searchResults; // Trả danh sách về cho UI tự in
     }
 
-    // 5. CHỨC NĂNG XUẤT TOÀN BỘ DANH BẠ NHÀ CUNG CẤP
-    public void displaySupplier() {
-        System.out.println("\n--- Supplier List ---");
-        if (listSupplier.isEmpty()) {
-            System.out.println("No suppliers available.");
-            return;
-        }
-        System.out.println("-------------------------------------------------------------------------------------");
-        System.out.printf("| %-12s | %-25s | %-20s | %-15s |\n", "Supplier ID", "Supplier Name", "Contact Name", "Phone Number");
-        System.out.println("-------------------------------------------------------------------------------------");
-        for (Supplier s : listSupplier) {
-            System.out.println(s.toString());
-        }
-        System.out.println("-------------------------------------------------------------------------------------");
+    // 5. HÀM LẤY TOÀN BỘ DANH SÁCH (Để bên UI mang đi hiển thị)
+    public ArrayList<Supplier> getListSupplier() {
+        return listSupplier;
     }
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 // Lớp quản lý xử lý các chức năng nghiệp vụ (CRUD) của Nhân viên
 public class EmployeeManager { // Đã đổi tên class trùng khít 100% với tên file EmployeeManager.java
     // Sử dụng kỹ thuật ArrayList để lưu trữ danh sách nhân viên trong bộ nhớ máy
-    private ArrayList<Employee> employeeList;
+    private final ArrayList<Employee> employeeList;
 
     // Hàm khởi tạo tạo mới một danh sách rỗng
     public EmployeeManager() {
