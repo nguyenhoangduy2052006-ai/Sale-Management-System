@@ -31,8 +31,12 @@ public class VoucherManager {
         Voucher v = searchVoucher(code);
 
         if (v != null) {
-            v.setDiscountValue(discountValue);
-            return true;
+
+            if (discountValue >= 5) {
+                v.setDiscountValue(discountValue);
+                return true;
+            }
+
         }
 
         return false;
