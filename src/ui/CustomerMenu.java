@@ -45,8 +45,7 @@ public class CustomerMenu {
                     String address = sc.nextLine();
 
                     System.out.print("Enter Total Purchase: ");
-                    double totalPurchase =
-                            Double.parseDouble(sc.nextLine());
+                    double totalPurchase = Double.parseDouble(sc.nextLine());
 
                     Customer customer = new Customer(
                             id,
@@ -73,8 +72,7 @@ public class CustomerMenu {
                     System.out.print("New Address: ");
                     address = sc.nextLine();
 
-                    if (customerManager.updateCustomer(
-                            id, name, phone, address)) {
+                    if (customerManager.updateCustomer(id, name, phone, address)) {
                         System.out.println("Update Successfully!");
                     } else {
                         System.out.println("Customer Not Found!");
