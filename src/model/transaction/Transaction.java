@@ -7,9 +7,6 @@ package model.transaction;
 public class Transaction {
 
     private String transactionId;
-    private String productId;
-    private String productName;
-    private int quantity;
     private String transactionType; // IMPORT hoặc EXPORT
     private String transactionDate;
 
@@ -17,16 +14,10 @@ public class Transaction {
     }
 
     public Transaction(String transactionId,
-                       String productId,
-                       String productName,
-                       int quantity,
                        String transactionType,
                        String transactionDate) {
 
         this.transactionId = transactionId;
-        this.productId = productId;
-        this.productName = productName;
-        this.quantity = quantity;
         this.transactionType = transactionType;
         this.transactionDate = transactionDate;
     }
@@ -38,31 +29,6 @@ public class Transaction {
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
     }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public String getTransactionType() {
         return transactionType;
     }
@@ -83,9 +49,6 @@ public class Transaction {
     public String toString() {
         return "Transaction{" +
                 "transactionId='" + transactionId + '\'' +
-                ", productId='" + productId + '\'' +
-                ", productName='" + productName + '\'' +
-                ", quantity=" + quantity +
                 ", transactionType='" + transactionType + '\'' +
                 ", transactionDate='" + transactionDate + '\'' +
                 '}';

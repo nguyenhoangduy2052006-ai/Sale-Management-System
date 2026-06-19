@@ -53,9 +53,6 @@ public class TransactionManager {
 
     // UPDATE
     public void updateTransaction(String transactionId,
-                                  String newProductId,
-                                  String newProductName,
-                                  int newQuantity,
                                   String newTransactionType,
                                   String newTransactionDate) {
 
@@ -66,10 +63,6 @@ public class TransactionManager {
             System.out.println("Không tìm thấy giao dịch.");
             return;
         }
-
-        transaction.setProductId(newProductId);
-        transaction.setProductName(newProductName);
-        transaction.setQuantity(newQuantity);
         transaction.setTransactionType(newTransactionType);
         transaction.setTransactionDate(newTransactionDate);
 
