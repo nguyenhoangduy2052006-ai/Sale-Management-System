@@ -2,6 +2,7 @@
 package model.product;
 
 public abstract class Product { // Abstract giup xac dinh cu the tung san pham
+    // tìm hi?u lai absstract
     // Product ID
     // LTxxx: ID Laptop
     // SPxxx: ID smartphone

@@ -10,7 +10,7 @@ public class ProductManager {
     public ProductManager() {
         this.productList = new ArrayList<>();
     }
-    
+    // Tim hieu l?i constructor ProductManager
     // getter
     public ArrayList<Product> getProductList (){
         return productList;

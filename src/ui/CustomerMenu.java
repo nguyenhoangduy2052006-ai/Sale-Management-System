@@ -20,7 +20,8 @@ public class CustomerMenu {
         do {
             System.out.println("\n===== CUSTOMER MENU =====");
             System.out.println("1. Add Customer");
-            System.out.println("2. Update Customer");
+            System.out.println("2. Up"
+                    + "date Customer");
             System.out.println("3. Remove Customer");
             System.out.println("4. Search Customer");
             System.out.println("5. Display Customers");

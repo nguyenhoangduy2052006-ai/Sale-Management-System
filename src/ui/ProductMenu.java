@@ -31,7 +31,6 @@ public class ProductMenu {
             System.out.println("3. Remove Product");
             System.out.println("4. Display All Product");
             System.out.println("5. Search Product by ID");
-            System.out.println("6. Search Product by Name");
             System.out.println("0. Exit");
             
             choice = InputHelper.readInt(scanner); // goi tuw ham check integer from util
