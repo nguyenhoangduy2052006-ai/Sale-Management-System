@@ -86,4 +86,9 @@ public class TransactionManager {
     public int getTotalTransactions() {
         return transactionList.size();
     }
+    
+    // Tra ve danh sach Transaction
+    public ArrayList<Transaction> getTransactionList() {
+        return transactionList;
+    }
 }

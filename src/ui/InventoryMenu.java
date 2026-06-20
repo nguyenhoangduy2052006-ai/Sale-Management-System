@@ -7,9 +7,17 @@ import java.util.Scanner;
 
 // Lớp hiển thị giao diện Menu Console điều khiển phân hệ Kho hàng
 public class InventoryMenu {
+    
+    private InventoryManager inventoryManager; 
+    private Scanner sc; 
+    
+    public InventoryMenu(InventoryManager inventoryManager) { 
+        this.inventoryManager = inventoryManager;
+        this.sc = new Scanner(System.in);
+    }
 
     // Hàm nhận vào Scanner từ Main và đối tượng quản lý dữ liệu gốc invMgr
-    public void displayMenu(Scanner sc, InventoryManager invMgr) {
+    public void showMenu() {
         int choice; // Biến lưu lựa chọn của người dùng
         do {
             System.out.println("\n==================================");
@@ -31,27 +39,26 @@ public class InventoryMenu {
                 case 1: // CHỨC NĂNG THÊM MỚI
                     System.out.print("Enter Inventory ID: ");
                     String id = sc.nextLine();
-                    if (invMgr.findById(id) != null) { // Kiểm tra xem ID này có ai dùng chưa
+                    if (inventoryManager.findById(id) != null) { // Kiểm tra xem ID này có ai dùng chưa
                         System.out.println("Error: Inventory ID already exists!");
                         break; // Trùng thì dừng luôn case, bắt nhập lại từ đầu menu
                     }
                     System.out.print("Enter Item Name: ");
                     String name = sc.nextLine();
                     System.out.print("Enter Quantity: ");
-                    int qty = sc.nextInt();
-                    sc.nextLine();
+                    int qty = Integer.parseInt(sc.nextLine());
                     System.out.print("Enter Warehouse Location: ");
                     String loc = sc.nextLine();
 
                     // Gọi hàm add và truyền object mới tạo vào
-                    if (invMgr.addInventory(new Inventory(id, name, qty, loc))) {
+                    if (inventoryManager.addInventory(new Inventory(id, name, qty, loc))) {
                         System.out.println("Added to inventory successfully!");
                     }
                     break;
                 case 2: // CHỨC NĂNG CẬP NHẬT
                     System.out.print("Enter Inventory ID to update: ");
                     String upId = sc.nextLine();
-                    Inventory current = invMgr.findById(upId); // Tìm dữ liệu hiện tại
+                    Inventory current = inventoryManager.findById(upId); // Tìm dữ liệu hiện tại
                     if (current == null) {
                         System.out.println("Error: Inventory item not found.");
                     } else {
@@ -64,14 +71,14 @@ public class InventoryMenu {
                         System.out.print("New Location (Current: " + current.getLocation() + "): ");
                         String newLoc = sc.nextLine();
 
-                        invMgr.updateInventory(upId, newName, newQty, newLoc); // Tiến hành đè dữ liệu mới
+                        inventoryManager.updateInventory(upId, newName, newQty, newLoc); // Tiến hành đè dữ liệu mới
                         System.out.println("Inventory updated successfully!");
                     }
                     break;
                 case 3: // CHỨC NĂNG XÓA
                     System.out.print("Enter Inventory ID to remove: ");
                     String rmId = sc.nextLine();
-                    if (invMgr.removeInventory(rmId)) {
+                    if (inventoryManager.removeInventory(rmId)) {
                         System.out.println("Removed successfully!");
                     } else {
                         System.out.println("Error: Item not found.");
@@ -80,7 +87,7 @@ public class InventoryMenu {
                 case 4: // CHỨC NĂNG TÌM KIẾM
                     System.out.print("Enter Keyword (ID or Item Name) to search: ");
                     String kw = sc.nextLine();
-                    ArrayList<Inventory> searchRes = invMgr.searchInventory(kw); // Nhận danh sách kết quả trả về
+                    ArrayList<Inventory> searchRes = inventoryManager.searchInventory(kw); // Nhận danh sách kết quả trả về
                     if (searchRes.isEmpty()) {
                         System.out.println("No matching items found.");
                     } else {
@@ -91,7 +98,7 @@ public class InventoryMenu {
                     }
                     break;
                 case 5:
-                    ArrayList<Inventory> inventories = invMgr.getAllInventory();
+                    ArrayList<Inventory> inventories = inventoryManager.getAllInventory();
 
                     if (inventories.isEmpty()) {
                         System.out.println("Inventory is empty.");

@@ -6,9 +6,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SupplierMenu {
+    private SupplierManager supplierManager; 
+    private Scanner scanner;  
+    
+    public SupplierMenu(SupplierManager supplierManager) {
+        this.supplierManager = supplierManager;
+        this.scanner = new Scanner(System.in);
+    }
 
     // Hàm điều phối chính của Menu Nhà cung cấp
-    public void displayMenu(Scanner scanner, SupplierManager supplierManager) {
+    public void showMenu() {
         int choice;
         do {
             System.out.println("\n==================================");
@@ -34,19 +41,19 @@ public class SupplierMenu {
             // Gọi các hàm xử lý UI tương ứng
             switch (choice) {
                 case 1:
-                    addSupplierUI(scanner, supplierManager);
+                    addSupplierUI();
                     break;
                 case 2:
-                    updateSupplierUI(scanner, supplierManager);
+                    updateSupplierUI();
                     break;
                 case 3:
-                    deleteSupplierUI(scanner, supplierManager);
+                    deleteSupplierUI();
                     break;
                 case 4:
-                    searchSupplierUI(scanner, supplierManager);
+                    searchSupplierUI();
                     break;
                 case 5:
-                    displaySupplierUI(supplierManager);
+                    displaySupplierUI();
                     break;
                 case 0:
                     System.out.println("Returning to main menu...");
@@ -62,7 +69,7 @@ public class SupplierMenu {
     // =================================================================
 
     // UI Chức năng 1: Nhập liệu và Thêm mới
-    private void addSupplierUI(Scanner scanner, SupplierManager supplierManager) {
+    private void addSupplierUI() {
         System.out.println("\n--- Add New Supplier ---");
         System.out.print("Enter Supplier ID: ");
         String supplierID = scanner.nextLine().trim();
@@ -90,7 +97,7 @@ public class SupplierMenu {
     }
 
     // UI Chức năng 2: Hiển thị thông tin hiện tại và Nhập thông tin cập nhật
-    private void updateSupplierUI(Scanner scanner, SupplierManager supplierManager) {
+    private void updateSupplierUI() {
         System.out.println("\n--- Update Supplier ---");
         System.out.print("Enter Supplier ID to update: ");
         String supplierID = scanner.nextLine().trim();
@@ -132,7 +139,7 @@ public class SupplierMenu {
     }
 
     // UI Chức năng 3: Nhập ID và Xóa
-    private void deleteSupplierUI(Scanner scanner, SupplierManager supplierManager) {
+    private void deleteSupplierUI() {
         System.out.println("\n--- Delete Supplier ---");
         System.out.print("Enter Supplier ID to delete: ");
         String supplierID = scanner.nextLine().trim();
@@ -145,7 +152,7 @@ public class SupplierMenu {
     }
 
     // UI Chức năng 4: Nhập từ khóa và in kết quả tìm kiếm
-    private void searchSupplierUI(Scanner scanner, SupplierManager supplierManager) {
+    private void searchSupplierUI() {
         System.out.println("\n--- Search Supplier ---");
         System.out.print("Enter Keyword (ID or Name) to search: ");
         String keyword = scanner.nextLine().trim();
@@ -164,7 +171,7 @@ public class SupplierMenu {
     }
 
     // UI Chức năng 5: In toàn bộ danh sách ra dạng bảng
-    private void displaySupplierUI(SupplierManager supplierManager) {
+    private void displaySupplierUI() {
         System.out.println("\n--- Supplier List ---");
         ArrayList<Supplier> list = supplierManager.getListSupplier();
         

@@ -9,7 +9,7 @@ public class VoucherMenu {
     private VoucherManager voucherManager;
     private Scanner sc;
 
-    public VoucherMenu() {
+    public VoucherMenu(VoucherManager voucherManager) {
         voucherManager = new VoucherManager();
         sc = new Scanner(System.in);
     }

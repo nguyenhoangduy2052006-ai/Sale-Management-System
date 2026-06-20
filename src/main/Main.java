@@ -26,9 +26,6 @@ public class Main {
         voucherManager);
         
         // ==================== CHẠY CHƯƠNG TRÌNH ====================
-        System.out.println(util.InputHelper.repeatChar ("=", 50));
-        System.out.println("SALE MANAGEMENT SYSTEM - GROUP 6 ");
-        System.out.println(util.InputHelper.repeatChar("=", 50));
         
         mainMenu.displayMainMenu();
     }

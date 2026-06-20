@@ -2,6 +2,7 @@
 package ui;
 
 import manager.*;
+
 import java.util.Scanner;
 public class MainMenu {
     private final ProductMenu productMenu;
@@ -37,7 +38,7 @@ public class MainMenu {
         int choice;
         do {
             System.out.println(util.InputHelper.repeatChar("=", 50));
-            System.out.println("SALE MANAGEMENT SYSTEM");
+            System.out.println("        SALE MANAGEMENT SYSTEM - GROUP 6");
             System.out.println(util.InputHelper.repeatChar("=", 50));
             
             System.out.println("1. Product Management");
@@ -70,11 +71,11 @@ public class MainMenu {
                     break;
                 }
                 case 4: {
-                    //inventoryMenu.displayMenu(scanner, invMgr); Tung co van de ve logic
+                    inventoryMenu.showMenu();
                     break;
                 }
                 case 5: {
-                    // supplierMenu.displayMenu(); Tung co van de ve logic
+                    supplierMenu.showMenu(); 
                     break;
                 }
                 case 6: {
@@ -86,8 +87,7 @@ public class MainMenu {
                     break;
                 }
                 case 8: {
-                    // reportMenu.reportMenu(); 
-                    System.out.println("not yet do it");
+                    reportMenu.showMenu(); 
                     break;
                 }
                 case 0: {
