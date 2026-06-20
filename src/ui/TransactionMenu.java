@@ -1,20 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package ui;
 
 import java.util.Scanner;
 import manager.TransactionManager;
 import model.transaction.Transaction;
+import manager.ProductManager;
 
 public class TransactionMenu {
 
     private TransactionManager transactionManager;
     private Scanner sc;
 
-    public TransactionMenu() {
-        transactionManager = new TransactionManager();
+    public TransactionMenu(TransactionManager transactionManager, ProductManager productManager) {
+        this.transactionManager = transactionManager;
         sc = new Scanner(System.in);
     }
 
@@ -71,16 +69,7 @@ public class TransactionMenu {
     private void addTransactionUI() {
 
         System.out.print("Transaction ID: ");
-        String transactionId = sc.nextLine();
-
-        System.out.print("Product ID: ");
-        String productId = sc.nextLine();
-
-        System.out.print("Product Name: ");
-        String productName = sc.nextLine();
-
-        System.out.print("Quantity: ");
-        int quantity = Integer.parseInt(sc.nextLine());
+        String id = sc.nextLine();
 
         System.out.print("Transaction Type (IMPORT/EXPORT): ");
         String type = sc.nextLine();
@@ -88,14 +77,7 @@ public class TransactionMenu {
         System.out.print("Transaction Date: ");
         String date = sc.nextLine();
 
-        Transaction transaction = new Transaction(
-                transactionId,
-                productId,
-                productName,
-                quantity,
-                type,
-                date
-        );
+        Transaction transaction = new Transaction(id, type, date);
 
         transactionManager.addTransaction(transaction);
     }
@@ -118,38 +100,22 @@ public class TransactionMenu {
     private void updateTransactionUI() {
 
         System.out.print("Transaction ID: ");
-        String transactionId = sc.nextLine();
+        String id = sc.nextLine();
 
-        System.out.print("New Product ID: ");
-        String productId = sc.nextLine();
-
-        System.out.print("New Product Name: ");
-        String productName = sc.nextLine();
-
-        System.out.print("New Quantity: ");
-        int quantity = Integer.parseInt(sc.nextLine());
-
-        System.out.print("New Type: ");
+        System.out.print("New Type(IMPORT/EXPORT): ");
         String type = sc.nextLine();
 
-        System.out.print("New Date: ");
+        System.out.print("New Date (dd/MM/yyyy): ");
         String date = sc.nextLine();
 
-        transactionManager.updateTransaction(
-                transactionId,
-                productId,
-                productName,
-                quantity,
-                type,
-                date
-        );
+        transactionManager.updateTransaction(id, type, date);
     }
 
     private void deleteTransactionUI() {
 
         System.out.print("Transaction ID: ");
-        String transactionId = sc.nextLine();
+        String id = sc.nextLine();
 
-        transactionManager.deleteTransaction(transactionId);
+        transactionManager.deleteTransaction(id);
     }
 }

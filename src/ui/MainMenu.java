@@ -17,9 +17,9 @@ public class MainMenu {
     
     public MainMenu (ProductManager pm,
             CustomerManager cm,
-            TransactionManager tm,
             EmployeeManager em,
             SupplierManager sm,
+            TransactionManager tm,
             InventoryManager im,
             VoucherManager vm) {
         
@@ -78,7 +78,7 @@ public class MainMenu {
                     break;
                 }
                 case 6: {
-                    // employeeManager.employeeMenu(); Tung co van de ve logic
+                    employeeMenu.showMenu(); 
                     break;
                 }
                 case 7: {

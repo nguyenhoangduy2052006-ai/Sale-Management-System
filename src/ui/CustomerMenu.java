@@ -9,7 +9,7 @@ public class CustomerMenu {
     private CustomerManager customerManager;
     private Scanner sc;
 
-    public CustomerMenu() {
+    public CustomerMenu(CustomerManager customerManager) {
         customerManager = new CustomerManager();
         sc = new Scanner(System.in);
     }

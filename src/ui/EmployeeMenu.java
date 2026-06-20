@@ -1,37 +1,23 @@
-package ui; // Khớp chính xác với package ui viết thường hiện tại của ông
 
-import model.employee.Employee; // Import đúng thực thể Employee từ model
-import manager.EmployeeManager; // Import đúng lớp quản lý EmployeeManager từ gói manager
+package ui;
+
+import model.employee.Employee;
+import manager.EmployeeManager;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-// Lớp giao diện Menu xử lý tương tác nhập xuất của Phân hệ Nhân viên
 public class EmployeeMenu {
+    private EmployeeManager employeeManager; // ← thêm field
+    private Scanner sc;                       // ← thêm field
 
-    private void displayEmployees(ArrayList<Employee> employeeList) {
-        if (employeeList.isEmpty()) {
-            System.out.println("No employees available.");
-            return;
-        }
-
-        System.out.println("-------------------------------------------------------------------------");
-        System.out.printf("| %-10s | %-20s | %-15s | %-15s |\n",
-                "ID", "Name", "Role", "Phone");
-        System.out.println("-------------------------------------------------------------------------");
-
-        for (Employee e : employeeList) {
-            System.out.println(e.toString());
-        }
-
-        System.out.println("-------------------------------------------------------------------------");
+    // ← thêm constructor nhận tham số
+    public EmployeeMenu(EmployeeManager employeeManager) {
+        this.employeeManager = employeeManager;
+        this.sc = new Scanner(System.in);
     }
 
-    // Hàm hiển thị và điều hướng Menu chức năng
-    // Đã sửa tham số truyền vào thành EmployeeManager cho khớp với class xử lý
-    public void displayMenu(Scanner sc, EmployeeManager empMgr) {
-
+    public void showMenu() { // 
         int choice;
-        // Vòng lặp do-while giữ người dùng ở lại menu cho đến khi chọn 0
         do {
             System.out.println("\n===========================================");
             System.out.println("               EMPLOYEE MENU               ");
@@ -54,7 +40,7 @@ public class EmployeeMenu {
             }
 
             switch (choice) {
-                case 1: // Chức năng thêm mới nhân viên
+                case 1:
                     System.out.print("Enter ID: ");
                     String id = sc.nextLine();
                     System.out.print("Enter Name: ");
@@ -66,17 +52,17 @@ public class EmployeeMenu {
                     System.out.print("Enter Password: ");
                     String pass = sc.nextLine();
 
-                    if (empMgr.addEmployee(new Employee(id, name, role, phone, pass))) {
+                    if (employeeManager.addEmployee(new Employee(id, name, role, phone, pass))) {
                         System.out.println("Added successfully!");
                     } else {
                         System.out.println("Error: Employee ID already exists!");
                     }
                     break;
 
-                case 2: // Chức năng sửa đổi dữ liệu nhân viên
+                case 2:
                     System.out.print("Enter Employee ID to update: ");
                     String upId = sc.nextLine();
-                    Employee current = empMgr.findById(upId);
+                    Employee current = employeeManager.findById(upId);
                     if (current == null) {
                         System.out.println("Error: Employee not found.");
                     } else {
@@ -89,25 +75,25 @@ public class EmployeeMenu {
                         System.out.print("New Password: ");
                         String newPass = sc.nextLine();
 
-                        empMgr.updateEmployee(upId, newName, newRole, newPhone, newPass);
+                        employeeManager.updateEmployee(upId, newName, newRole, newPhone, newPass);
                         System.out.println("Updated successfully!");
                     }
                     break;
 
-                case 3: // Chức năng xóa bỏ nhân viên
+                case 3:
                     System.out.print("Enter Employee ID to remove: ");
                     String rmId = sc.nextLine();
-                    if (empMgr.removeEmployee(rmId)) {
+                    if (employeeManager.removeEmployee(rmId)) {
                         System.out.println("Removed successfully!");
                     } else {
                         System.out.println("Error: Employee not found.");
                     }
                     break;
 
-                case 4: // Chức năng tìm kiếm theo từ khóa (ID hoặc Tên)
+                case 4:
                     System.out.print("Enter Keyword (ID or Name) to search: ");
                     String kw = sc.nextLine();
-                    ArrayList<Employee> searchRes = empMgr.searchEmployee(kw);
+                    ArrayList<Employee> searchRes = employeeManager.searchEmployee(kw);
                     if (searchRes.isEmpty()) {
                         System.out.println("No matching employee found.");
                     } else {
@@ -117,11 +103,12 @@ public class EmployeeMenu {
                         }
                     }
                     break;
+
                 case 5:
-                    displayEmployees(empMgr.getAllEmployees());
+                    displayEmployees(employeeManager.getAllEmployees());
                     break;
 
-                case 0: // Quay lại menu chính
+                case 0:
                     System.out.println("Returning to main menu...");
                     break;
 
@@ -129,5 +116,20 @@ public class EmployeeMenu {
                     System.out.println("Invalid choice! Try again.");
             }
         } while (choice != 0);
+    }
+
+    private void displayEmployees(ArrayList<Employee> employeeList) {
+        if (employeeList.isEmpty()) {
+            System.out.println("No employees available.");
+            return;
+        }
+        System.out.println("-------------------------------------------------------------------------");
+        System.out.printf("| %-10s | %-20s | %-15s | %-15s |\n",
+                "ID", "Name", "Role", "Phone");
+        System.out.println("-------------------------------------------------------------------------");
+        for (Employee e : employeeList) {
+            System.out.println(e.toString());
+        }
+        System.out.println("-------------------------------------------------------------------------");
     }
 }

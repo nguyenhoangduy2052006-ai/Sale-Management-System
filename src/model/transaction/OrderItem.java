@@ -1,18 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package model.transaction;
 public class OrderItem {
 
     private String orderItemId;
+    private String productId;
+    private int quantity;
     private double unitPrice;
 
     public OrderItem() {
     }
 
-    public OrderItem(String orderItemId, double unitPrice) {
+    public OrderItem(String orderItemId, String productId, int quantity, double unitPrice) {
         this.orderItemId = orderItemId;
+        this.productId=productId;
+        this.quantity= quantity;
         this.unitPrice = unitPrice;
     }
 
@@ -22,6 +23,21 @@ public class OrderItem {
 
     public void setOrderItemId(String orderItemId) {
         this.orderItemId = orderItemId;
+        
+    }
+    
+    public String getProductId() {
+        return productId; 
+    }
+    public void setProductId(String productId) {
+        this.productId = productId; 
+    }
+    
+    public int getQuantity() { 
+        return quantity; 
+    }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity; 
     }
 
     public double getUnitPrice() {
@@ -31,12 +47,19 @@ public class OrderItem {
     public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
+    
+    public double getTotalPrice () {
+        return quantity*unitPrice; // Ham tien ich
+    }
 
     @Override
     public String toString() {
         return "OrderItem{" +
                 "orderItemId='" + orderItemId + '\'' +
+                ", productId='" + productId + '\'' +
+                ", quantity=" + quantity +
                 ", unitPrice=" + unitPrice +
+                ", totalPrice=" + getTotalPrice() +
                 '}';
     }
 }

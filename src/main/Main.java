@@ -30,7 +30,7 @@ public class Main {
         System.out.println("SALE MANAGEMENT SYSTEM - GROUP 6 ");
         System.out.println(util.InputHelper.repeatChar("=", 50));
         
-        
+        mainMenu.displayMainMenu();
     }
     
 }
