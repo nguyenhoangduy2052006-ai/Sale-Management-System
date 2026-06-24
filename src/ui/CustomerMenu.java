@@ -10,8 +10,8 @@ public class CustomerMenu {
     private Scanner sc;
 
     public CustomerMenu(CustomerManager customerManager) {
-        customerManager = new CustomerManager();
-        sc = new Scanner(System.in);
+        this.customerManager = new CustomerManager();
+        this.sc = new Scanner(System.in);
     }
 
     public void showMenu() {
