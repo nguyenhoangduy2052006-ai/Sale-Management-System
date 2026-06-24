@@ -10,8 +10,8 @@ public class VoucherMenu {
     private Scanner sc;
 
     public VoucherMenu(VoucherManager voucherManager) {
-        voucherManager = new VoucherManager();
-        sc = new Scanner(System.in);
+        this.voucherManager = new VoucherManager();
+        this.sc = new Scanner(System.in);
     }
 
     public void showMenu() {
