@@ -7,10 +7,9 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class EmployeeMenu {
-    private EmployeeManager employeeManager; // ← thêm field
-    private Scanner sc;                       // ← thêm field
+    private EmployeeManager employeeManager; 
+    private Scanner sc;                       
 
-    // ← thêm constructor nhận tham số
     public EmployeeMenu(EmployeeManager employeeManager) {
         this.employeeManager = employeeManager;
         this.sc = new Scanner(System.in);
