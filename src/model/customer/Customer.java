@@ -18,12 +18,14 @@ public class Customer {
         this.totalPurchase = totalPurchase;
     }
 
+    // Getter Customer ID
     public String getCustomerID() {
         return customerID;
     }
 
+    // Setter Customer ID (không cho phép sửa)
     public void setCustomerID(String customerID) {
-        this.customerID = customerID;
+        return;
     }
 
     public String getCustomerName() {
@@ -58,3 +60,4 @@ public class Customer {
         this.totalPurchase = totalPurchase;
     }
 }
+
