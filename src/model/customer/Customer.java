@@ -23,10 +23,7 @@ public class Customer {
         return customerID;
     }
 
-    // Setter Customer ID (không cho phép sửa)
-    public void setCustomerID(String customerID) {
-        return;
-    }
+    // Không có setCustomerID()
 
     public String getCustomerName() {
         return customerName;
@@ -60,4 +57,3 @@ public class Customer {
         this.totalPurchase = totalPurchase;
     }
 }
-
