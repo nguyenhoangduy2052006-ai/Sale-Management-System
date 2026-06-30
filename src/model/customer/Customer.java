@@ -2,11 +2,11 @@ package model.customer;
 
 public class Customer {
 
-    private String customerID;
-    private String customerName;
-    private String phoneNumber;
-    private String address;
-    private double totalPurchase;
+    protected String customerID;
+    protected String customerName;
+    protected String phoneNumber;
+    protected String address;
+    protected double totalPurchase;
 
     public Customer(String customerID, String customerName,
                     String phoneNumber, String address,
@@ -18,12 +18,9 @@ public class Customer {
         this.totalPurchase = totalPurchase;
     }
 
-    // Getter Customer ID
     public String getCustomerID() {
         return customerID;
     }
-
-    // Không có setCustomerID()
 
     public String getCustomerName() {
         return customerName;
@@ -55,5 +52,14 @@ public class Customer {
 
     public void setTotalPurchase(double totalPurchase) {
         this.totalPurchase = totalPurchase;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer ID: " + customerID +
+               "\nCustomer Name: " + customerName +
+               "\nPhone Number: " + phoneNumber +
+               "\nAddress: " + address +
+               "\nTotal Purchase: " + totalPurchase;
     }
 }
