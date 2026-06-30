@@ -47,12 +47,12 @@ public class MainMenu {
             System.out.println("4. Inventory Management");
             System.out.println("5. Supplier Managerment");
             System.out.println("6. Employee Management");
-            System.out.println("7. Voucher Managemen");
+            System.out.println("7. Voucher Management");
             System.out.println("8. Reporting");
             System.out.println("0. Exit");
             
             System.out.println(util.InputHelper.repeatChar("=", 50));
-            System.out.println("Input your choice: ");
+            System.out.print("Input your choice: ");
             
             choice = scanner.nextInt();
             scanner.nextLine(); // clear buffer?

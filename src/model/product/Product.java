@@ -45,11 +45,11 @@ public abstract class Product { // Abstract giup xac dinh cu the tung san pham
 
     // Setters
     public void setProductName(String productName) {
-        this.productName = (productName == null || this.productName.trim().isEmpty()) ? "Error Product name!" : productName;
+        this.productName = (productName == null || productName.trim().isEmpty()) ? "Error Product name!" : productName;
     }
 
     public void setCategory(String category) {
-        this.category = (category == null || this.category.trim().isEmpty()) ? "Error. Can not empty" : category;
+        this.category = (category == null || category.trim().isEmpty()) ? "Error. Can not empty" : category;
     }
 
     public void setPrice(double price) {

@@ -7,7 +7,7 @@ import model.voucher.Voucher;
 public class VoucherMenu {
 
     private VoucherManager voucherManager;
-    private Scanner sc;
+    private  Scanner sc;
 
     public VoucherMenu(VoucherManager voucherManager) {
         voucherManager = new VoucherManager();

@@ -24,7 +24,7 @@ public class ProductMenu {
         int choice;
         do {
             System.out.println("\n" + InputHelper.repeatChar("=", 50)); // Java hieu se repeatChar là method cua Inputhelper vao di vao do de goi ham nay va dung
-            System.out.println("                        PRODUCT MANAGER");
+            System.out.println("        PRODUCT MANAGER");
             System.out.println(InputHelper.repeatChar("=", 50));
             System.out.println("1. Add New Product");
             System.out.println("2. Update Product");

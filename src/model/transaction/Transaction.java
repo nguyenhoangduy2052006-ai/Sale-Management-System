@@ -57,7 +57,7 @@ public class Transaction {
         orderItems.add(item); 
     }
 
-     public void removeOrderItem(String orderItemId) {
+    public void removeOrderItem(String orderItemId) {
         orderItems.removeIf(item -> item.getOrderItemId().equals(orderItemId));
     }
      

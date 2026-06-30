@@ -19,7 +19,7 @@ public class Laptop extends Product{
         return cpu;
     }
     public String getStorage () {
-        return cpu;
+        return storage;
     }
     
     public void setRam (String ram) {
