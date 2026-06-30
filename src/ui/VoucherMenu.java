@@ -1,172 +1,188 @@
 package ui;
 
 import model.voucher.Voucher;
+import manager.VoucherManager; // Import VoucherManager từ package manager sang
+
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class VoucherMenu {
+    private final VoucherManager voucherManager;
+    private final Scanner scanner;
+    private final DateTimeFormatter formatter;
 
-    private VoucherManager manager;
-    private Scanner scanner;
-
-    public VoucherMenu() {
-        manager = new VoucherManager();
-        scanner = new Scanner(System.in);
+    public VoucherMenu(VoucherManager voucherManager) {
+        this.voucherManager = voucherManager;
+        this.scanner = new Scanner(System.in);
+        this.formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Định dạng: Năm-Tháng-Ngày
     }
 
-    
     public void showMenu() {
-        int choice = -1;
+        int choice;
         do {
-            System.out.println("\n========== VOUCHER MANAGEMENT SYSTEM ==========");
-            System.out.println("1. Add a New Voucher");
+            System.out.println("\n==================================================");
+            System.out.println("                VOUCHER MANAGEMENT");
+            System.out.println("==================================================");
+            System.out.println("1. Add New Voucher");
             System.out.println("2. Search Voucher by Code");
-            System.out.println("3. Update Voucher Discount Value");
-            System.out.println("4. Remove a Voucher");
+            System.out.println("3. Update Voucher Discount");
+            System.out.println("4. Remove Voucher");
             System.out.println("5. Display All Vouchers");
-            System.out.println("6. Display Valid Vouchers (Active & Unexpired)");
-            System.out.println("7. Check if a Voucher is Valid");
-            System.out.println("0. Exit");
-            System.out.print("Enter your choice (0-7): ");
+            System.out.println("6. Display Valid Vouchers");
+            System.out.println("7. Check Voucher Validity");
+            System.out.println("0. Back to Main Menu");
+            System.out.println("==================================================");
+            System.out.print("Input your choice: ");
 
             try {
-                choice = Integer.parseInt(scanner.nextLine());
-                switch (choice) {
-                    case 1:
-                        addVoucherMenu();
-                        break;
-                    case 2:
-                        searchVoucherMenu();
-                        break;
-                    case 3:
-                        updateVoucherMenu();
-                        break;
-                    case 4:
-                        removeVoucherMenu();
-                        break;
-                    case 5:
-                        manager.displayVouchers();
-                        break;
-                    case 6:
-                        manager.displayValidVouchers();
-                        break;
-                    case 7:
-                        checkVoucherValidityMenu();
-                        break;
-                    case 0:
-                        System.out.println("Exiting system. Goodbye!");
-                        break;
-                    default:
-                        System.out.println("Invalid choice! Please choose between 0 and 7.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Please enter a valid number.");
+                choice = scanner.nextInt();
+                scanner.nextLine(); // Clear buffer
+            } catch (Exception e) {
+                System.out.println("Invalid input! Please enter a number.");
+                scanner.nextLine(); // Clear buffer khi nhập lỗi
+                choice = -1;
+                continue;
             }
-            System.out.println("-----------------------------------------------");
+
+            switch (choice) {
+                case 1:
+                    addNewVoucher();
+                    break;
+                case 2:
+                    searchVoucher();
+                    break;
+                case 3:
+                    updateVoucher();
+                    break;
+                case 4:
+                    removeVoucher();
+                    break;
+                case 5:
+                    System.out.println("\n--- All Vouchers ---");
+                    voucherManager.displayVouchers();
+                    break;
+                case 6:
+                    System.out.println("\n--- Valid Vouchers ---");
+                    voucherManager.displayValidVouchers();
+                    break;
+                case 7:
+                    checkValidity();
+                    break;
+                case 0:
+                    System.out.println("Returning to Main Menu...");
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+            }
         } while (choice != 0);
     }
 
-    
-    private void addVoucherMenu() {
+    // 1. Hàm thêm mới Voucher
+    private void addNewVoucher() {
         System.out.println("\n--- Add New Voucher ---");
         System.out.print("Enter Voucher ID: ");
         String id = scanner.nextLine().trim();
         System.out.print("Enter Voucher Code: ");
         String code = scanner.nextLine().trim();
-
-        double discount = -1;
-        while (discount <= 0) {
-            try {
-                System.out.print("Enter Discount Value (> 0): ");
-                discount = Double.parseDouble(scanner.nextLine());
-                if (discount <= 0) System.out.println("Discount must be greater than 0.");
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number format. Try again.");
-            }
+        
+        System.out.print("Enter Discount Value: ");
+        double discount = 0;
+        try {
+            discount = scanner.nextDouble();
+            scanner.nextLine(); // Clear buffer
+        } catch (Exception e) {
+            System.out.println("Invalid discount value!");
+            scanner.nextLine();
+            return;
         }
 
-        LocalDate expiryDate = null;
-        while (expiryDate == null) {
-            System.out.print("Enter Expiry Date (YYYY-MM-DD): ");
-            String dateInput = scanner.nextLine().trim();
-            try {
-                expiryDate = LocalDate.parse(dateInput);
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format! Please use YYYY-MM-DD.");
-            }
+        System.out.print("Enter Expiry Date (yyyy-MM-dd): ");
+        String dateStr = scanner.nextLine().trim();
+        LocalDate expiryDate;
+        try {
+            expiryDate = LocalDate.parse(dateStr, formatter);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format! Use yyyy-MM-dd.");
+            return;
         }
 
         System.out.print("Is Active? (true/false): ");
-        boolean status = Boolean.parseBoolean(scanner.nextLine());
+        boolean status = false;
+        try {
+            status = scanner.nextBoolean();
+            scanner.nextLine(); // Clear buffer
+        } catch (Exception e) {
+            System.out.println("Invalid status! Defaulted to 'false'.");
+            scanner.nextLine();
+        }
 
-        
         Voucher newVoucher = new Voucher(id, code, discount, expiryDate, status);
-
-        if (manager.addVoucher(newVoucher)) {
+        if (voucherManager.addVoucher(newVoucher)) {
             System.out.println("Voucher added successfully!");
         } else {
-            System.out.println("Failed to add! Voucher ID or Code already exists.");
+            System.out.println("Failed to add! Duplicate ID or Code.");
         }
     }
 
-    
-    private void searchVoucherMenu() {
-        System.out.println("\n--- Search Voucher ---");
-        System.out.print("Enter Voucher Code to search: ");
+    // 2. Tìm kiếm Voucher
+    private void searchVoucher() {
+        System.out.print("\nEnter Voucher Code to search: ");
         String code = scanner.nextLine().trim();
-        
-        Voucher v = manager.searchVoucher(code);
+        Voucher v = voucherManager.searchVoucher(code);
         if (v != null) {
-            System.out.println("Voucher Found:");
-            System.out.println("ID: " + v.getVoucherID() + " | Code: " + v.getVoucherCode() + " | Discount: " + v.getDiscountValue() + " | Expiry: " + v.getExpiryDate() + " | Status: " + (v.isStatus() ? "Active" : "Inactive"));
+            System.out.println("Found: ID: " + v.getVoucherID() 
+                    + " | Code: " + v.getVoucherCode() 
+                    + " | Discount: " + v.getDiscountValue() 
+                    + " | Expiry: " + v.getExpiryDate() 
+                    + " | Status: " + (v.isStatus() ? "Active" : "Inactive"));
         } else {
-            System.out.println("No voucher found with code: " + code);
+            System.out.println("Voucher not found!");
         }
     }
 
-   
-    private void updateVoucherMenu() {
-        System.out.println("\n--- Update Voucher Discount ---");
-        System.out.print("Enter Voucher Code to update: ");
+    // 3. Cập nhật chiết khấu
+    private void updateVoucher() {
+        System.out.print("\nEnter Voucher Code to update: ");
         String code = scanner.nextLine().trim();
-
         System.out.print("Enter New Discount Value: ");
+        double discount;
         try {
-            double newDiscount = Double.parseDouble(scanner.nextLine());
-            if (manager.updateVoucher(code, newDiscount)) {
-                System.out.println("Discount updated successfully!");
-            } else {
-                System.out.println("Update failed! Voucher not found or invalid discount value.");
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid discount format.");
+            discount = scanner.nextDouble();
+            scanner.nextLine(); // Clear buffer
+        } catch (Exception e) {
+            System.out.println("Invalid value!");
+            scanner.nextLine();
+            return;
+        }
+
+        if (voucherManager.updateVoucher(code, discount)) {
+            System.out.println("Voucher updated successfully!");
+        } else {
+            System.out.println("Update failed! Code not found or invalid discount.");
         }
     }
 
-    
-    private void removeVoucherMenu() {
-        System.out.println("\n--- Remove Voucher ---");
-        System.out.print("Enter Voucher Code to remove: ");
+    // 4. Xóa Voucher
+    private void removeVoucher() {
+        System.out.print("\nEnter Voucher Code to remove: ");
         String code = scanner.nextLine().trim();
-
-        if (manager.removeVoucher(code)) {
+        if (voucherManager.removeVoucher(code)) {
             System.out.println("Voucher removed successfully!");
         } else {
-            System.out.println("Remove failed! Voucher code not found.");
+            System.out.println("Remove failed! Voucher code does not exist.");
         }
     }
 
-    
-    private void checkVoucherValidityMenu() {
-        System.out.println("\n--- Check Voucher Validity ---");
-        System.out.print("Enter Voucher Code to check: ");
+    // 7. Kiểm tra tính hợp lệ nhanh
+    private void checkValidity() {
+        System.out.print("\nEnter Voucher Code to check: ");
         String code = scanner.nextLine().trim();
-
-        if (manager.isVoucherValid(code)) {
-            System.out.println("Result: This voucher is VALID and USABLE.");
+        if (voucherManager.isVoucherValid(code)) {
+            System.out.println("Status: VALID (Active and Unexpired)");
         } else {
-            System.out.println("Result: This voucher is INVALID (either expired, inactive, or does not exist).");
+            System.out.println("Status: INVALID (Expired, Inactive, or Does not exist)");
         }
     }
 }
