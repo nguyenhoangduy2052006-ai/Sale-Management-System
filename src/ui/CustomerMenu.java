@@ -1,168 +1,172 @@
-package ui;
+package manager;
 
+import model.voucher.Voucher;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-import manager.CustomerManager;
-import model.customer.Customer;
-import model.customer.VipCustomer;
-import model.customer.RegularCustomer;
 
-public class CustomerMenu {
+public class VoucherMenu {
 
-    private CustomerManager customerManager;
-    private Scanner sc;
+    private VoucherManager manager;
+    private Scanner scanner;
 
-    public CustomerMenu(CustomerManager customerManager) {
-        this.customerManager = customerManager;
-        this.sc = new Scanner(System.in);
+    public VoucherMenu() {
+        manager = new VoucherManager();
+        scanner = new Scanner(System.in);
     }
 
+    
     public void showMenu() {
-
-        int choice;
-
+        int choice = -1;
         do {
-            System.out.println("\n===== CUSTOMER MENU =====");
-            System.out.println("1. Add Customer");
-            System.out.println("2. Update Customer");
-            System.out.println("3. Remove Customer");
-            System.out.println("4. Search Customer");
-            System.out.println("5. Display Customers");
+            System.out.println("\n========== VOUCHER MANAGEMENT SYSTEM ==========");
+            System.out.println("1. Add a New Voucher");
+            System.out.println("2. Search Voucher by Code");
+            System.out.println("3. Update Voucher Discount Value");
+            System.out.println("4. Remove a Voucher");
+            System.out.println("5. Display All Vouchers");
+            System.out.println("6. Display Valid Vouchers (Active & Unexpired)");
+            System.out.println("7. Check if a Voucher is Valid");
             System.out.println("0. Exit");
-            System.out.print("Choose: ");
+            System.out.print("Enter your choice (0-7): ");
 
-            choice = Integer.parseInt(sc.nextLine());
-
-            switch (choice) {
-
-                // ================= ADD CUSTOMER =================
-                case 1:
-
-                    System.out.print("Enter ID: ");
-                    String id = sc.nextLine();
-
-                    System.out.print("Enter Name: ");
-                    String name = sc.nextLine();
-
-                    System.out.print("Enter Phone: ");
-                    String phone = sc.nextLine();
-
-                    System.out.print("Enter Address: ");
-                    String address = sc.nextLine();
-
-                    System.out.print("Enter Total Purchase: ");
-                    double totalPurchase = Double.parseDouble(sc.nextLine());
-
-                    System.out.println("1. VIP");
-                    System.out.println("2. Regular");
-                    System.out.print("Choose type: ");
-                    int type = Integer.parseInt(sc.nextLine());
-
-                    Customer customer;
-
-                    if (type == 1) {
-
-                        System.out.print("VIP Discount: ");
-                        double vipDiscount = Double.parseDouble(sc.nextLine());
-
-                        System.out.print("VIP Level: ");
-                        String vipLevel = sc.nextLine();
-
-                        customer = new VipCustomer(
-                                id, name, phone, address,
-                                totalPurchase, vipDiscount, vipLevel
-                        );
-
-                    } else {
-
-                        System.out.print("Regular Discount: ");
-                        double regDiscount = Double.parseDouble(sc.nextLine());
-
-                        System.out.print("Reward Points: ");
-                        int rewardPoints = Integer.parseInt(sc.nextLine());
-
-                        customer = new RegularCustomer(
-                                id, name, phone, address,
-                                totalPurchase, regDiscount, rewardPoints
-                        );
-                    }
-
-                    // ⭐ FIX QUAN TRỌNG: CHECK RETURN VALUE
-                    if (customerManager.addCustomer(customer)) {
-                        System.out.println("Add Customer Successfully!");
-                    } else {
-                        System.out.println("Add Failed! Duplicate ID.");
-                    }
-
-                    break;
-
-                // ================= UPDATE =================
-                case 2:
-
-                    System.out.print("Enter Customer ID: ");
-                    id = sc.nextLine();
-
-                    System.out.print("New Name: ");
-                    name = sc.nextLine();
-
-                    System.out.print("New Phone: ");
-                    phone = sc.nextLine();
-
-                    System.out.print("New Address: ");
-                    address = sc.nextLine();
-
-                    if (customerManager.updateCustomer(id, name, phone, address)) {
-                        System.out.println("Update Successfully!");
-                    } else {
-                        System.out.println("Customer Not Found!");
-                    }
-
-                    break;
-
-                // ================= REMOVE =================
-                case 3:
-
-                    System.out.print("Enter Customer ID: ");
-                    id = sc.nextLine();
-
-                    if (customerManager.removeCustomer(id)) {
-                        System.out.println("Remove Successfully!");
-                    } else {
-                        System.out.println("Customer Not Found!");
-                    }
-
-                    break;
-
-                // ================= SEARCH =================
-                case 4:
-
-                    System.out.print("Enter Customer ID: ");
-                    id = sc.nextLine();
-
-                    Customer c = customerManager.searchCustomer(id);
-
-                    if (c != null) {
-                        System.out.println(c);
-                    } else {
-                        System.out.println("Customer Not Found!");
-                    }
-
-                    break;
-
-                // ================= DISPLAY =================
-                case 5:
-
-                    customerManager.displayCustomers();
-                    break;
-
-                case 0:
-                    System.out.println("Exit Program");
-                    break;
-
-                default:
-                    System.out.println("Invalid Choice!");
+            try {
+                choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1:
+                        addVoucherMenu();
+                        break;
+                    case 2:
+                        searchVoucherMenu();
+                        break;
+                    case 3:
+                        updateVoucherMenu();
+                        break;
+                    case 4:
+                        removeVoucherMenu();
+                        break;
+                    case 5:
+                        manager.displayVouchers();
+                        break;
+                    case 6:
+                        manager.displayValidVouchers();
+                        break;
+                    case 7:
+                        checkVoucherValidityMenu();
+                        break;
+                    case 0:
+                        System.out.println("Exiting system. Goodbye!");
+                        break;
+                    default:
+                        System.out.println("Invalid choice! Please choose between 0 and 7.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Please enter a valid number.");
             }
-
+            System.out.println("-----------------------------------------------");
         } while (choice != 0);
     }
-}
+
+    
+    private void addVoucherMenu() {
+        System.out.println("\n--- Add New Voucher ---");
+        System.out.print("Enter Voucher ID: ");
+        String id = scanner.nextLine().trim();
+        System.out.print("Enter Voucher Code: ");
+        String code = scanner.nextLine().trim();
+
+        double discount = -1;
+        while (discount <= 0) {
+            try {
+                System.out.print("Enter Discount Value (> 0): ");
+                discount = Double.parseDouble(scanner.nextLine());
+                if (discount <= 0) System.out.println("Discount must be greater than 0.");
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number format. Try again.");
+            }
+        }
+
+        LocalDate expiryDate = null;
+        while (expiryDate == null) {
+            System.out.print("Enter Expiry Date (YYYY-MM-DD): ");
+            String dateInput = scanner.nextLine().trim();
+            try {
+                expiryDate = LocalDate.parse(dateInput);
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format! Please use YYYY-MM-DD.");
+            }
+        }
+
+        System.out.print("Is Active? (true/false): ");
+        boolean status = Boolean.parseBoolean(scanner.nextLine());
+
+        
+        Voucher newVoucher = new Voucher(id, code, discount, expiryDate, status);
+
+        if (manager.addVoucher(newVoucher)) {
+            System.out.println("Voucher added successfully!");
+        } else {
+            System.out.println("Failed to add! Voucher ID or Code already exists.");
+        }
+    }
+
+    
+    private void searchVoucherMenu() {
+        System.out.println("\n--- Search Voucher ---");
+        System.out.print("Enter Voucher Code to search: ");
+        String code = scanner.nextLine().trim();
+        
+        Voucher v = manager.searchVoucher(code);
+        if (v != null) {
+            System.out.println("Voucher Found:");
+            System.out.println("ID: " + v.getVoucherID() + " | Code: " + v.getVoucherCode() + " | Discount: " + v.getDiscountValue() + " | Expiry: " + v.getExpiryDate() + " | Status: " + (v.isStatus() ? "Active" : "Inactive"));
+        } else {
+            System.out.println("No voucher found with code: " + code);
+        }
+    }
+
+   
+    private void updateVoucherMenu() {
+        System.out.println("\n--- Update Voucher Discount ---");
+        System.out.print("Enter Voucher Code to update: ");
+        String code = scanner.nextLine().trim();
+
+        System.out.print("Enter New Discount Value: ");
+        try {
+            double newDiscount = Double.parseDouble(scanner.nextLine());
+            if (manager.updateVoucher(code, newDiscount)) {
+                System.out.println("Discount updated successfully!");
+            } else {
+                System.out.println("Update failed! Voucher not found or invalid discount value.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid discount format.");
+        }
+    }
+
+    
+    private void removeVoucherMenu() {
+        System.out.println("\n--- Remove Voucher ---");
+        System.out.print("Enter Voucher Code to remove: ");
+        String code = scanner.nextLine().trim();
+
+        if (manager.removeVoucher(code)) {
+            System.out.println("Voucher removed successfully!");
+        } else {
+            System.out.println("Remove failed! Voucher code not found.");
+        }
+    }
+
+    
+    private void checkVoucherValidityMenu() {
+        System.out.println("\n--- Check Voucher Validity ---");
+        System.out.print("Enter Voucher Code to check: ");
+        String code = scanner.nextLine().trim();
+
+        if (manager.isVoucherValid(code)) {
+            System.out.println("Result: This voucher is VALID and USABLE.");
+        } else {
+            System.out.println("Result: This voucher is INVALID (either expired, inactive, or does not exist).");
+        }
+    }
 }
