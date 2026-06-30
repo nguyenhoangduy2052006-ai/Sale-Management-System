@@ -1,15 +1,20 @@
 package model.voucher;
 
+
+import java.time.LocalDate;
+
 public class Voucher {
 
-    private String voucherID;
+    private final String voucherID;
     private String voucherCode;
     private double discountValue;
-    private String expiryDate;
+    
+    private LocalDate expiryDate; 
     private boolean status;
 
+   
     public Voucher(String voucherID, String voucherCode,
-                   double discountValue, String expiryDate,
+                   double discountValue, LocalDate expiryDate,
                    boolean status) {
         this.voucherID = voucherID;
         this.voucherCode = voucherCode;
@@ -20,10 +25,6 @@ public class Voucher {
 
     public String getVoucherID() {
         return voucherID;
-    }
-
-    public void setVoucherID(String voucherID) {
-        this.voucherID = voucherID;
     }
 
     public String getVoucherCode() {
@@ -42,11 +43,13 @@ public class Voucher {
         this.discountValue = discountValue;
     }
 
-    public String getExpiryDate() {
+    
+    public LocalDate getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(String expiryDate) {
+    
+    public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
     }
 
@@ -58,4 +61,3 @@ public class Voucher {
         this.status = status;
     }
 }
-
