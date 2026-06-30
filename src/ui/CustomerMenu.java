@@ -3,6 +3,8 @@ package ui;
 import java.util.Scanner;
 import manager.CustomerManager;
 import model.customer.Customer;
+import model.customer.VipCustomer;
+import model.customer.RegularCustomer;
 
 public class CustomerMenu {
 
@@ -10,18 +12,18 @@ public class CustomerMenu {
     private Scanner sc;
 
     public CustomerMenu(CustomerManager customerManager) {
-        this.customerManager = new CustomerManager();
+        this.customerManager = customerManager;
         this.sc = new Scanner(System.in);
     }
 
     public void showMenu() {
+
         int choice;
 
         do {
             System.out.println("\n===== CUSTOMER MENU =====");
             System.out.println("1. Add Customer");
-            System.out.println("2. Up"
-                    + "date Customer");
+            System.out.println("2. Update Customer");
             System.out.println("3. Remove Customer");
             System.out.println("4. Search Customer");
             System.out.println("5. Display Customers");
@@ -32,7 +34,9 @@ public class CustomerMenu {
 
             switch (choice) {
 
+                // ================= ADD CUSTOMER =================
                 case 1:
+
                     System.out.print("Enter ID: ");
                     String id = sc.nextLine();
 
@@ -48,19 +52,52 @@ public class CustomerMenu {
                     System.out.print("Enter Total Purchase: ");
                     double totalPurchase = Double.parseDouble(sc.nextLine());
 
-                    Customer customer = new Customer(
-                            id,
-                            name,
-                            phone,
-                            address,
-                            totalPurchase
-                    );
+                    System.out.println("1. VIP");
+                    System.out.println("2. Regular");
+                    System.out.print("Choose type: ");
+                    int type = Integer.parseInt(sc.nextLine());
 
-                    customerManager.addCustomer(customer);
-                    System.out.println("Add Customer Successfully!");
+                    Customer customer;
+
+                    if (type == 1) {
+
+                        System.out.print("VIP Discount: ");
+                        double vipDiscount = Double.parseDouble(sc.nextLine());
+
+                        System.out.print("VIP Level: ");
+                        String vipLevel = sc.nextLine();
+
+                        customer = new VipCustomer(
+                                id, name, phone, address,
+                                totalPurchase, vipDiscount, vipLevel
+                        );
+
+                    } else {
+
+                        System.out.print("Regular Discount: ");
+                        double regDiscount = Double.parseDouble(sc.nextLine());
+
+                        System.out.print("Reward Points: ");
+                        int rewardPoints = Integer.parseInt(sc.nextLine());
+
+                        customer = new RegularCustomer(
+                                id, name, phone, address,
+                                totalPurchase, regDiscount, rewardPoints
+                        );
+                    }
+
+                    // ⭐ FIX QUAN TRỌNG: CHECK RETURN VALUE
+                    if (customerManager.addCustomer(customer)) {
+                        System.out.println("Add Customer Successfully!");
+                    } else {
+                        System.out.println("Add Failed! Duplicate ID.");
+                    }
+
                     break;
 
+                // ================= UPDATE =================
                 case 2:
+
                     System.out.print("Enter Customer ID: ");
                     id = sc.nextLine();
 
@@ -78,9 +115,12 @@ public class CustomerMenu {
                     } else {
                         System.out.println("Customer Not Found!");
                     }
+
                     break;
 
+                // ================= REMOVE =================
                 case 3:
+
                     System.out.print("Enter Customer ID: ");
                     id = sc.nextLine();
 
@@ -89,9 +129,12 @@ public class CustomerMenu {
                     } else {
                         System.out.println("Customer Not Found!");
                     }
+
                     break;
 
+                // ================= SEARCH =================
                 case 4:
+
                     System.out.print("Enter Customer ID: ");
                     id = sc.nextLine();
 
@@ -102,9 +145,12 @@ public class CustomerMenu {
                     } else {
                         System.out.println("Customer Not Found!");
                     }
+
                     break;
 
+                // ================= DISPLAY =================
                 case 5:
+
                     customerManager.displayCustomers();
                     break;
 
@@ -118,4 +164,5 @@ public class CustomerMenu {
 
         } while (choice != 0);
     }
+}
 }
