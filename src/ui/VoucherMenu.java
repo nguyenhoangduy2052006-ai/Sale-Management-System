@@ -1,4 +1,4 @@
-package manager;
+package ui;
 
 import model.voucher.Voucher;
 import java.time.LocalDate;
