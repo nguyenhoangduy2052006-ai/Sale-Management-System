@@ -4,6 +4,7 @@ package ui;
 import manager.*;
 
 import java.util.Scanner;
+
 public class MainMenu {
     private final ProductMenu productMenu;
     private final CustomerMenu customerMenu;
@@ -11,7 +12,7 @@ public class MainMenu {
     private final EmployeeMenu employeeMenu;
     private final SupplierMenu supplierMenu;
     private final InventoryMenu inventoryMenu;
-    private final VoucherMenu voucherMenu;
+    private  VoucherMenu voucherMenu;
     private final ReportMenu reportMenu;
     
     private final Scanner scanner = new Scanner (System.in);
@@ -99,3 +100,4 @@ public class MainMenu {
         }while (choice!=0);
     }
 }
+
