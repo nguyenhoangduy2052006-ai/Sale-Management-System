@@ -2,6 +2,7 @@ package manager;
 
 import model.customer.Customer;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class CustomerManager {
 
@@ -11,17 +12,24 @@ public class CustomerManager {
         customerList = new ArrayList<>();
     }
 
-    // Add
-    public void addCustomer(Customer customer) {
-        try {
-            customerList.add(customer);
-        } catch (Exception e) {
-            System.out.println("Add customer failed!");
+    public boolean addCustomer(Customer customer) {
+
+        if (customer == null) return false;
+
+        for (Customer c : customerList) {
+            if (c.getCustomerID().equalsIgnoreCase(customer.getCustomerID())) {
+                System.out.println("Duplicate ID! Cannot add customer.");
+                return false;
+            }
         }
+
+        customerList.add(customer);
+        return true;
     }
 
-    // Search
+    
     public Customer searchCustomer(String id) {
+
         for (Customer c : customerList) {
             if (c.getCustomerID().equalsIgnoreCase(id)) {
                 return c;
@@ -30,9 +38,10 @@ public class CustomerManager {
         return null;
     }
 
-    // Update
+  
     public boolean updateCustomer(String id, String name,
                                   String phone, String address) {
+
         Customer c = searchCustomer(id);
 
         if (c != null) {
@@ -45,25 +54,53 @@ public class CustomerManager {
         return false;
     }
 
-    // Remove
+    
     public boolean removeCustomer(String id) {
+
         Customer c = searchCustomer(id);
 
         if (c != null) {
-            try {
-                return customerList.remove(c);
-            } catch (Exception e) {
-                System.out.println("Remove customer failed!");
-            }
+            customerList.remove(c);
+            return true;
         }
 
         return false;
     }
 
-    // Display
+    
     public void displayCustomers() {
+
+        if (customerList.isEmpty()) {
+            System.out.println("No customer found!");
+            return;
+        }
+
         for (Customer c : customerList) {
             System.out.println(c);
+            System.out.println("-------------------");
         }
     }
-}
+
+    
+    public void displayTopCustomers(int topN) {
+
+        if (customerList.isEmpty()) {
+            System.out.println("No customer found!");
+            return;
+        }
+
+        ArrayList<Customer> sortedList = new ArrayList<>(customerList);
+
+        sortedList.sort(new Comparator<Customer>() {
+            @Override
+            public int compare(Customer c1, Customer c2) {
+                return Double.compare(c2.getTotalPurchase(), c1.getTotalPurchase());
+            }
+        });
+
+        for (int i = 0; i < topN && i < sortedList.size(); i++) {
+            System.out.println(sortedList.get(i));
+            System.out.println("-------------------");
+        }
+    }
+} 
