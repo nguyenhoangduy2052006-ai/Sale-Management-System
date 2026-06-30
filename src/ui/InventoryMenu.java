@@ -5,7 +5,6 @@ import manager.InventoryManager;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// Lớp hiển thị giao diện Menu Console điều khiển phân hệ Kho hàng
 public class InventoryMenu {
     
     private InventoryManager inventoryManager; 
@@ -16,7 +15,7 @@ public class InventoryMenu {
         this.sc = new Scanner(System.in);
     }
 
-    // Hàm nhận vào Scanner từ Main và đối tượng quản lý dữ liệu gốc invMgr
+   
     public void showMenu() {
         int choice; // Biến lưu lựa chọn của người dùng
         do {
