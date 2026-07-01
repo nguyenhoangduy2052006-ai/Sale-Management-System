@@ -4,6 +4,7 @@ import model.inventory.Inventory;
 import java.util.ArrayList;
 
 public class InventoryManager {
+
     private ArrayList<Inventory> inventoryList;
 
     public InventoryManager() {
@@ -21,11 +22,18 @@ public class InventoryManager {
     }
 
     public boolean updateInventory(String id, String newName, int newQty, String newLocation) {
+        if (id == null || id.trim().isEmpty()
+                || newName == null || newName.trim().isEmpty()
+                || newLocation == null || newLocation.trim().isEmpty()
+                || newQty < 0) {
+            return false;
+        }
+
         for (Inventory i : inventoryList) {
             if (i.getInventoryID().equalsIgnoreCase(id)) {
-                i.setItemName(newName);
+                i.setItemName(newName.trim());
                 i.setQuantity(newQty);
-                i.setLocation(newLocation);
+                i.setLocation(newLocation.trim());
                 return true;
             }
         }
@@ -64,5 +72,19 @@ public class InventoryManager {
             }
         }
         return null;
+    }
+
+    public boolean reduceStock(String id, int sellQty) {
+        Inventory inv = findById(id);
+        if (inv == null || sellQty <= 0) {
+            return false;
+        }
+
+        if (inv.getQuantity() < sellQty) {
+            return false;
+        }
+
+        inv.setQuantity(inv.getQuantity() - sellQty);
+        return true;
     }
 }

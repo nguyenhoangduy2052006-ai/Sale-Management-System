@@ -1,9 +1,11 @@
-package model.supplier; 
+package model.supplier;
+
 public class Supplier {
-    private String supplierID;   
-    private String supplierName; 
-    private String contactName;  
-    private String phoneNumber;  
+
+    private final String supplierID;
+    private String supplierName;
+    private String contactName;
+    private String phoneNumber;
 
     public Supplier(String supplierID, String supplierName, String contactName, String phoneNumber) {
         this.supplierID = supplierID;
@@ -12,17 +14,34 @@ public class Supplier {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getSupplierID() { return supplierID; }
-    public void setSupplierID(String supplierID) { this.supplierID = supplierID; }
+    public String getSupplierID() {
+        return supplierID;
+    }
+    // HÀM setSupplierID() ĐÃ ĐƯỢC XÓA BỎ ĐỂ ĐẢM BẢO TÍNH ĐÓNG GÓI CHUẨN OOP
 
-    public String getSupplierName() { return supplierName; }
-    public void setSupplierName(String supplierName) { this.supplierName = supplierName; }
+    public String getSupplierName() {
+        return supplierName;
+    }
 
-    public String getContactName() { return contactName; }
-    public void setContactName(String contactName) { this.contactName = contactName; }
+    public void setSupplierName(String supplierName) {
+        this.supplierName = supplierName;
+    }
 
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     @Override
     public String toString() {

@@ -1,8 +1,8 @@
-
 package model.employee;
+
 public class Employee {
-    
-    private String employeeID;
+
+    private final String employeeID;
     private String employeeName;
     private String role;
     private String phoneNumber;
@@ -16,20 +16,42 @@ public class Employee {
         this.password = password;
     }
 
-    public String getEmployeeID() { return employeeID; }
-    public void setEmployeeID(String employeeID) { this.employeeID = employeeID; }
+    public String getEmployeeID() {
+        return employeeID;
+    }
+    // HÀM setEmployeeID() ĐÃ ĐƯỢC XÓA BỎ ĐỂ ĐẢM BẢO TÍNH TOÀN VẸN DỮ LIỆU
 
-    public String getEmployeeName() { return employeeName; }
-    public void setEmployeeName(String employeeName) { this.employeeName = employeeName; }
+    public String getEmployeeName() {
+        return employeeName;
+    }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
 
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public String getRole() {
+        return role;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {

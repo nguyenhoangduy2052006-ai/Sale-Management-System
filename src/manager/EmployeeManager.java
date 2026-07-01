@@ -4,6 +4,7 @@ import model.employee.Employee;
 import java.util.ArrayList;
 
 public class EmployeeManager {
+
     private final ArrayList<Employee> employeeList;
 
     public EmployeeManager() {
@@ -21,12 +22,21 @@ public class EmployeeManager {
     }
 
     public boolean updateEmployee(String id, String newName, String newRole, String newPhone, String newPassword) {
+        // Validate input rỗng
+        if (id == null || id.trim().isEmpty()
+                || newName == null || newName.trim().isEmpty()
+                || newRole == null || newRole.trim().isEmpty()
+                || newPhone == null || newPhone.trim().isEmpty()
+                || newPassword == null || newPassword.trim().isEmpty()) {
+            return false;
+        }
+
         for (Employee e : employeeList) {
             if (e.getEmployeeID().equalsIgnoreCase(id)) {
-                e.setEmployeeName(newName);
-                e.setRole(newRole);
-                e.setPhoneNumber(newPhone);
-                e.setPassword(newPassword);
+                e.setEmployeeName(newName.trim());
+                e.setRole(newRole.trim());
+                e.setPhoneNumber(newPhone.trim());
+                e.setPassword(newPassword.trim());
                 return true;
             }
         }
@@ -34,9 +44,10 @@ public class EmployeeManager {
     }
 
     public boolean removeEmployee(String id) {
-        for (Employee e : employeeList) {
-            if (e.getEmployeeID().equalsIgnoreCase(id)) {
-                employeeList.remove(e);
+        // Đổi sang index-based loop để xóa an toàn, tránh rủi ro crash bộ nhớ
+        for (int i = 0; i < employeeList.size(); i++) {
+            if (employeeList.get(i).getEmployeeID().equalsIgnoreCase(id)) {
+                employeeList.remove(i);
                 return true;
             }
         }

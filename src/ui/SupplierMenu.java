@@ -6,9 +6,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SupplierMenu {
-    private SupplierManager supplierManager; 
-    private Scanner scanner;  
-    
+
+    private SupplierManager supplierManager;
+    private Scanner scanner;
+
     public SupplierMenu(SupplierManager supplierManager) {
         this.supplierManager = supplierManager;
         this.scanner = new Scanner(System.in);
@@ -63,7 +64,6 @@ public class SupplierMenu {
         } while (choice != 0);
     }
 
-    
     private void addSupplierUI() {
         System.out.println("\n--- Add New Supplier ---");
         System.out.print("Enter Supplier ID: ");
@@ -143,11 +143,11 @@ public class SupplierMenu {
         String keyword = scanner.nextLine().trim();
 
         ArrayList<Supplier> results = supplierManager.searchSupplier(keyword);
-        
+
         if (results.isEmpty()) {
             System.out.println("No matching supplier found.");
         } else {
-            // In ra các dòng dữ liệu tìm thấy thỏa mãn điều kiện
+
             for (Supplier s : results) {
                 System.out.println(s.toString());
             }
@@ -157,12 +157,12 @@ public class SupplierMenu {
     private void displaySupplierUI() {
         System.out.println("\n--- Supplier List ---");
         ArrayList<Supplier> list = supplierManager.getListSupplier();
-        
+
         if (list.isEmpty()) {
             System.out.println("No suppliers available.");
             return;
         }
-       
+
         System.out.println("-------------------------------------------------------------------------------------");
         System.out.printf("| %-12s | %-25s | %-20s | %-15s |\n", "Supplier ID", "Supplier Name", "Contact Name", "Phone Number");
         System.out.println("-------------------------------------------------------------------------------------");

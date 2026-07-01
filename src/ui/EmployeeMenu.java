@@ -1,4 +1,3 @@
-
 package ui;
 
 import model.employee.Employee;
@@ -7,8 +6,9 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class EmployeeMenu {
-    private EmployeeManager employeeManager; 
-    private Scanner sc;                       
+
+    private EmployeeManager employeeManager;
+    private Scanner sc;
 
     public EmployeeMenu(EmployeeManager employeeManager) {
         this.employeeManager = employeeManager;

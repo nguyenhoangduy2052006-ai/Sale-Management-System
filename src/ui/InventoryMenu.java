@@ -6,16 +6,15 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InventoryMenu {
-    
-    private InventoryManager inventoryManager; 
-    private Scanner sc; 
-    
-    public InventoryMenu(InventoryManager inventoryManager) { 
+
+    private InventoryManager inventoryManager;
+    private Scanner sc;
+
+    public InventoryMenu(InventoryManager inventoryManager) {
         this.inventoryManager = inventoryManager;
         this.sc = new Scanner(System.in);
     }
 
-   
     public void showMenu() {
         int choice; // Biến lưu lựa chọn của người dùng
         do {
