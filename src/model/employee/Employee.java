@@ -19,7 +19,6 @@ public class Employee {
     public String getEmployeeID() {
         return employeeID;
     }
-    // HÀM setEmployeeID() ĐÃ ĐƯỢC XÓA BỎ ĐỂ ĐẢM BẢO TÍNH TOÀN VẸN DỮ LIỆU
 
     public String getEmployeeName() {
         return employeeName;

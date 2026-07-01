@@ -17,7 +17,6 @@ public class Supplier {
     public String getSupplierID() {
         return supplierID;
     }
-    // HÀM setSupplierID() ĐÃ ĐƯỢC XÓA BỎ ĐỂ ĐẢM BẢO TÍNH ĐÓNG GÓI CHUẨN OOP
 
     public String getSupplierName() {
         return supplierName;
