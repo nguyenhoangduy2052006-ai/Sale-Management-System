@@ -4,6 +4,9 @@ import model.customer.Customer;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+// 👉 THÊM IMPORT NÀY
+import java.io.*;
+
 public class CustomerManager {
 
     private ArrayList<Customer> customerList;
@@ -16,7 +19,6 @@ public class CustomerManager {
     public boolean addCustomer(Customer customer) {
         if (customer == null) return false;
 
-        // Kiểm tra trùng ID (Sử dụng getCustomerID() từ class Customer của bạn)
         for (Customer c : customerList) {
             if (c.getCustomerID().equalsIgnoreCase(customer.getCustomerID())) {
                 System.out.println("Duplicate ID! Cannot add customer.");
@@ -38,7 +40,7 @@ public class CustomerManager {
         return null;
     }
 
-    // 3. Cập nhật thông tin khách hàng (Dùng các hàm set tương ứng từ class Customer)
+    // 3. Cập nhật thông tin khách hàng
     public boolean updateCustomer(String id, String name, String phone, String address) {
         Customer c = searchCustomer(id);
 
@@ -64,21 +66,20 @@ public class CustomerManager {
         return false;
     }
 
-    // 5. Hiển thị danh sách khách hàng
+    
     public void displayCustomers() {
         if (customerList.isEmpty()) {
             System.out.println("No customer found!");
             return;
         }
 
-        // Tự động gọi hàm toString() đã override trong class Customer của bạn
         for (Customer c : customerList) {
             System.out.println(c);
             System.out.println("-------------------");
         }
     }
 
-    // 6. Hiển thị top khách hàng mua nhiều nhất (Sử dụng getTotalPurchase())
+    
     public void displayTopCustomers(int topN) {
         if (customerList.isEmpty()) {
             System.out.println("No customer found!");
@@ -87,7 +88,6 @@ public class CustomerManager {
 
         ArrayList<Customer> sortedList = new ArrayList<>(customerList);
 
-        // Sắp xếp giảm dần theo tổng giá trị mua hàng
         sortedList.sort(new Comparator<Customer>() {
             @Override
             public int compare(Customer c1, Customer c2) {
@@ -95,10 +95,69 @@ public class CustomerManager {
             }
         });
 
-        // In ra top N khách hàng
         for (int i = 0; i < topN && i < sortedList.size(); i++) {
             System.out.println(sortedList.get(i));
             System.out.println("-------------------");
+        }
+    }
+
+    
+    public void saveToFile(String filename) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
+
+            for (Customer c : customerList) {
+                bw.write(c.getCustomerID() + ","
+                        + c.getCustomerName() + ","
+                        + c.getPhoneNumber() + ","
+                        + c.getAddress() + ","
+                        + c.getTotalPurchase());
+                bw.newLine();
+            }
+
+            bw.close();
+            System.out.println("Save customer success!");
+
+        } catch (IOException e) {
+            System.out.println("Save file error!");
+        }
+    }
+
+    // =========================
+    // ✅ FILE I/O - LOAD
+    // =========================
+    public void loadFromFile(String filename) {
+        try {
+            File file = new File(filename);
+
+            if (!file.exists()) {
+                System.out.println("File not found, skip load.");
+                return;
+            }
+
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+
+                String[] p = line.split(",");
+
+                Customer c = new Customer(
+                        p[0],
+                        p[1],
+                        p[2],
+                        p[3],
+                        Double.parseDouble(p[4])
+                );
+
+                customerList.add(c);
+            }
+
+            br.close();
+            System.out.println("Load customer success!");
+
+        } catch (Exception e) {
+            System.out.println("Load file error!");
         }
     }
 }
