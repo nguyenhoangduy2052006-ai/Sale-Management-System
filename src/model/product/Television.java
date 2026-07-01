@@ -26,6 +26,10 @@ public class Television extends Product {
         this.resolution=resolution;
     }
     
+    @Override 
+    public String getIdPrefix () {
+        return "TV";
+    }
     @Override
     public String toString () {
         return super.toString() + String.format("| Screen Size: %s | Resolution: %s |", 

@@ -31,6 +31,12 @@ public class Laptop extends Product{
     public void setStorage (String storage) {
         this.storage=storage;
     }
+    
+    @Override
+    public String getIdPrefix() {
+        return "LT";
+    }
+    
     @Override
     public String toString () {
         return super.toString() + String.format("| RAM: %s || CPU: %s | Storage: %s",

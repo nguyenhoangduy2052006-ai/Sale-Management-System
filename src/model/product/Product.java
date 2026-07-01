@@ -15,6 +15,11 @@ public abstract class Product { // Abstract giup xac dinh cu the tung san pham
     private int quantity;
 
     public Product(String productId, String productName, String category, double price, int quantity) {
+        if (!isValidId(productId)) {
+            throw new IllegalArgumentException(
+                    "Invalid product ID: " + productId + ". Must start with " + getIdPrefix() + " followed by numbers."
+            );
+        }
         this.productId = productId;
         this.productName = productName;
         this.category = category;
@@ -67,6 +72,28 @@ public abstract class Product { // Abstract giup xac dinh cu the tung san pham
             System.out.println("Error. Quantity must be greater than 0 or equal 0.");
         }
     }
+    
+    // Abstract method 
+    public abstract String getIdPrefix ();
+    // Validate Id fuction
+    private boolean isValidId(String productId) {
+        if (productId == null || productId.length() < 3) {
+            return false;
+        }
+        // Kiểm tra bắt đầu bằng đúng prefix
+        if (!productId.startsWith(getIdPrefix())) {
+            return false;
+        }
+        // Kiểm tra phần sau prefix phải là số
+        String numberPart = productId.substring(getIdPrefix().length());
+        for (char c : numberPart.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     @Override
     public String toString () {
         return String.format("ProductId= %s, Product Name = %s, Category= %s, Price= %.2f, Quantity= %d",

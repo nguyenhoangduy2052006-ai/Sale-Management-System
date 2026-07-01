@@ -106,7 +106,7 @@ public class ProductMenu {
                 String screen = scanner.nextLine().trim();
                 System.out.print("Camera: ");
                 String camera = scanner.nextLine().trim();
-                System.out.println("Battery: ");
+                System.out.print("Battery: ");
                 String battery = scanner.nextLine().trim();
 
                 newProduct = new Smartphone(id, name, category, price, quantity, screen, camera, battery);
@@ -125,7 +125,15 @@ public class ProductMenu {
             }
         }
         if (newProduct != null) {
-         productManager.addNewProduct(newProduct);
+            try {
+                if (productManager.addNewProduct(newProduct)) {
+                    System.out.println("Product added successfully!");
+                } else {
+                    System.out.println("Error: Product ID already existed!");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
         }
     }
     
@@ -151,14 +159,22 @@ public class ProductMenu {
         System.out.print("New Quantity (-1 to skip): ");
         int newQuantity = InputHelper.readInt(scanner, -1);
 
-        productManager.updateProductInfo(id, newName.isEmpty() ? null : newName, newPrice, newQuantity);
+        if (productManager.updateProductInfo(id, newName.isEmpty() ? null : newName, newPrice, newQuantity)) {
+            System.out.println("Updated successfully!");
+        } else {
+            System.out.println("Update failed!");
+        }
     }
     
     // Remove product
     private void removeProduct() {
         System.out.print("\nEnter Product ID to remove: ");
         String id = scanner.nextLine().trim();
-        productManager.removeProduct(id);
+        if (productManager.removeProduct(id)) {
+            System.out.println("Removed successfully!");
+        } else {
+            System.out.println("Product not found!");
+        }
     }
     
     // Search by ID
