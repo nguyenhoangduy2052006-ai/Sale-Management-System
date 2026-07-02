@@ -66,7 +66,6 @@ public class CustomerManager {
         return false;
     }
 
-    
     public void displayCustomers() {
         if (customerList.isEmpty()) {
             System.out.println("No customer found!");
@@ -79,7 +78,6 @@ public class CustomerManager {
         }
     }
 
-    
     public void displayTopCustomers(int topN) {
         if (customerList.isEmpty()) {
             System.out.println("No customer found!");
@@ -101,7 +99,6 @@ public class CustomerManager {
         }
     }
 
-    
     public void saveToFile(String filename) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
@@ -124,7 +121,7 @@ public class CustomerManager {
     }
 
     // =========================
-    // ✅ FILE I/O - LOAD
+    // FILE I/O - LOAD
     // =========================
     public void loadFromFile(String filename) {
         try {
@@ -160,4 +157,5 @@ public class CustomerManager {
             System.out.println("Load file error!");
         }
     }
+
 }
