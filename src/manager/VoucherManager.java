@@ -156,12 +156,11 @@ public class VoucherManager {
 
                 String[] p = line.split(",");
 
-                // CHỈ SỬA KHÚC NÀY: Ép kiểu p[3] từ String sang LocalDate
                 Voucher v = new Voucher(
                         p[0],
                         p[1],
                         Double.parseDouble(p[2]),
-                        LocalDate.parse(p[3]), 
+                        LocalDate.parse(p[3]),
                         Boolean.parseBoolean(p[4])
                 );
 
@@ -175,4 +174,5 @@ public class VoucherManager {
             System.out.println("Load file error!");
         }
     }
+
 }
