@@ -1,18 +1,22 @@
-
 package ui;
 
 import java.util.Scanner;
-import manager.TransactionManager;
-import model.transaction.Transaction;
+
 import manager.ProductManager;
+import manager.TransactionManager;
+
+import model.transaction.OrderItem;
+import model.transaction.Transaction;
 
 public class TransactionMenu {
 
     private TransactionManager transactionManager;
+    private ProductManager productManager;
     private Scanner sc;
 
     public TransactionMenu(TransactionManager transactionManager, ProductManager productManager) {
         this.transactionManager = transactionManager;
+        this.productManager = productManager;
         sc = new Scanner(System.in);
     }
 
@@ -71,13 +75,54 @@ public class TransactionMenu {
         System.out.print("Transaction ID: ");
         String id = sc.nextLine();
 
+        System.out.print("Customer ID: ");
+        String customerId = sc.nextLine();
+
         System.out.print("Transaction Type (IMPORT/EXPORT): ");
         String type = sc.nextLine();
 
         System.out.print("Transaction Date: ");
         String date = sc.nextLine();
 
-        Transaction transaction = new Transaction(id, type, date);
+        Transaction transaction =
+                new Transaction(id, customerId, type, date);
+
+        String choice = null;
+
+        do {
+
+            System.out.println("\n----- Add Order Item -----");
+
+            System.out.print("Order Item ID: ");
+            String orderItemId = sc.nextLine();
+
+            System.out.print("Product ID: ");
+            String productId = sc.nextLine();
+
+            if (productManager.findProductById(productId) == null) {
+                System.out.println("Product not found.");
+                continue;
+            }
+
+            System.out.print("Quantity: ");
+            int quantity = Integer.parseInt(sc.nextLine());
+
+            System.out.print("Unit Price: ");
+            double unitPrice = Double.parseDouble(sc.nextLine());
+
+            OrderItem item = new OrderItem(
+                    orderItemId,
+                    productId,
+                    quantity,
+                    unitPrice
+            );
+
+            transaction.addOrderItem(item);
+
+            System.out.print("Add another Order Item? (Y/N): ");
+            choice = sc.nextLine();
+
+        } while (choice.equalsIgnoreCase("Y"));
 
         transactionManager.addTransaction(transaction);
     }
@@ -102,7 +147,7 @@ public class TransactionMenu {
         System.out.print("Transaction ID: ");
         String id = sc.nextLine();
 
-        System.out.print("New Type(IMPORT/EXPORT): ");
+        System.out.print("New Type (IMPORT/EXPORT): ");
         String type = sc.nextLine();
 
         System.out.print("New Date (dd/MM/yyyy): ");

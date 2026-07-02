@@ -1,4 +1,3 @@
-
 package manager;
 
 import java.util.ArrayList;
@@ -14,33 +13,76 @@ public class TransactionManager {
 
     // CREATE
     public void addTransaction(Transaction transaction) {
-        transactionList.add(transaction);
-        System.out.println("Thêm giao dịch thành công.");
-    }
 
-    // READ - Hiển thị tất cả giao dịch
-    public void displayTransactions() {
-
-        if (transactionList.isEmpty()) {
-            System.out.println("Danh sách giao dịch trống.");
+        if (transaction == null) {
+            System.out.println("Transaction is null.");
             return;
         }
 
-        System.out.println("\n===== DANH SÁCH GIAO DỊCH =====");
+        if (findTransactionById(transaction.getTransactionId()) != null) {
+            System.out.println("Transaction ID already exists.");
+            return;
+        }
+
+        if (transaction.getTransactionId() == null
+                || transaction.getTransactionId().trim().isEmpty()) {
+            System.out.println("Transaction ID cannot be empty.");
+            return;
+        }
+
+        if (transaction.getTransactionType() == null
+                || transaction.getTransactionType().trim().isEmpty()) {
+            System.out.println("Transaction type cannot be empty.");
+            return;
+        }
+
+        if (!transaction.getTransactionType().equalsIgnoreCase("IMPORT")
+                && !transaction.getTransactionType().equalsIgnoreCase("EXPORT")) {
+            System.out.println("Transaction type must be IMPORT or EXPORT.");
+            return;
+        }
+
+        if (transaction.getTransactionDate() == null
+                || transaction.getTransactionDate().trim().isEmpty()) {
+            System.out.println("Transaction date cannot be empty.");
+            return;
+        }
+
+        // BR8: Transaction must contain at least one OrderItem
+        if (transaction.getOrderItems().isEmpty()) {
+            System.out.println("Transaction must contain at least one OrderItem.");
+            return;
+        }
+
+        transactionList.add(transaction);
+        System.out.println("Transaction added successfully.");
+    }
+
+    // READ - Display all transactions
+    public void displayTransactions() {
+
+        if (transactionList.isEmpty()) {
+            System.out.println("Transaction list is empty.");
+            return;
+        }
+
+        System.out.println("\n===== TRANSACTION LIST =====");
 
         for (Transaction transaction : transactionList) {
             System.out.println(transaction);
         }
     }
 
-    // READ - Tìm giao dịch theo ID
+    // READ - Find transaction by ID
     public Transaction findTransactionById(String transactionId) {
+
+        if (transactionId == null || transactionId.trim().isEmpty()) {
+            return null;
+        }
 
         for (Transaction transaction : transactionList) {
 
-            if (transaction.getTransactionId()
-                    .equalsIgnoreCase(transactionId)) {
-
+            if (transaction.getTransactionId().equalsIgnoreCase(transactionId)) {
                 return transaction;
             }
         }
@@ -53,41 +95,63 @@ public class TransactionManager {
                                   String newTransactionType,
                                   String newTransactionDate) {
 
-        Transaction transaction =
-                findTransactionById(transactionId);
+        Transaction transaction = findTransactionById(transactionId);
 
         if (transaction == null) {
-            System.out.println("Không tìm thấy giao dịch.");
+            System.out.println("Transaction not found.");
             return;
         }
+
+        if (newTransactionType == null
+                || newTransactionType.trim().isEmpty()) {
+            System.out.println("Transaction type cannot be empty.");
+            return;
+        }
+
+        if (!newTransactionType.equalsIgnoreCase("IMPORT")
+                && !newTransactionType.equalsIgnoreCase("EXPORT")) {
+            System.out.println("Transaction type must be IMPORT or EXPORT.");
+            return;
+        }
+
+        if (newTransactionDate == null
+                || newTransactionDate.trim().isEmpty()) {
+            System.out.println("Transaction date cannot be empty.");
+            return;
+        }
+
         transaction.setTransactionType(newTransactionType);
         transaction.setTransactionDate(newTransactionDate);
 
-        System.out.println("Cập nhật giao dịch thành công.");
+        System.out.println("Transaction updated successfully.");
     }
 
     // DELETE
     public void deleteTransaction(String transactionId) {
 
-        Transaction transaction =
-                findTransactionById(transactionId);
+        if (transactionId == null || transactionId.trim().isEmpty()) {
+            System.out.println("Invalid transaction ID.");
+            return;
+        }
+
+        Transaction transaction = findTransactionById(transactionId);
 
         if (transaction == null) {
-            System.out.println("Không tìm thấy giao dịch.");
+            System.out.println("Transaction not found.");
             return;
         }
 
         transactionList.remove(transaction);
 
-        System.out.println("Xóa giao dịch thành công.");
+        System.out.println("Transaction deleted successfully.");
     }
 
-    // Đếm số lượng giao dịch
+    // Return total number of transactions
     public int getTotalTransactions() {
         return transactionList.size();
     }
-    
-    // Tra ve danh sach Transaction
+
+    // Return transaction list
     public ArrayList<Transaction> getTransactionList() {
         return transactionList;
     }
