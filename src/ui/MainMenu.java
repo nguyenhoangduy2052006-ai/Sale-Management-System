@@ -12,7 +12,7 @@ public class MainMenu {
     private final EmployeeMenu employeeMenu;
     private final SupplierMenu supplierMenu;
     private final InventoryMenu inventoryMenu;
-    private  VoucherMenu voucherMenu;
+    private final VoucherMenu voucherMenu;
     private final ReportMenu reportMenu;
     
     private final Scanner scanner = new Scanner (System.in);

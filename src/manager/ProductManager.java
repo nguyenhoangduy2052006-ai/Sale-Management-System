@@ -10,12 +10,14 @@ public class ProductManager {
     public ProductManager() {
         this.productList = new ArrayList<>();
     }
-    // Tim hieu l?i constructor ProductManager
+
     // getter
     public ArrayList<Product> getProductList (){
         return productList;
     }
 
+        //====================== CRUD ======================
+    
     // findProductById Function 
     public Product findProductById(String productId) {
         for (Product p : productList) {
@@ -77,5 +79,8 @@ public class ProductManager {
             System.out.println(p.toString());
         }
     }
+    
+    //====================== File I/O ======================
+    
 
 }
