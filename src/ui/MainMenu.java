@@ -60,7 +60,7 @@ public class MainMenu {
             
             switch (choice) {
                 case 1: {
-                    productMenu.productMenu();
+                    productMenu.showMenu();
                     break;
                 }
                 case 2: {

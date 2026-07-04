@@ -20,7 +20,7 @@ public class ProductMenu {
         this.scanner= new Scanner(System.in);
     }
     
-    public void productMenu () {
+    public void showMenu () {
         int choice;
         do {
             System.out.println("\n" + InputHelper.repeatChar("=", 50)); // Java hieu se repeatChar là method cua Inputhelper vao di vao do de goi ham nay va dung
