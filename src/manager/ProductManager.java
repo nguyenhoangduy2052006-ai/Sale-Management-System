@@ -2,13 +2,16 @@ package manager;
 
 import model.product.Product;
 import java.util.ArrayList;
+import repository.ProductRepository;
 
 public class ProductManager {
 
     private final ArrayList<Product> productList; // Khai bao bien
+    private final ProductRepository productRepo;
 
     public ProductManager() {
         this.productList = new ArrayList<>();
+        this.productRepo= new ProductRepository();
     }
 
     // getter
@@ -81,6 +84,15 @@ public class ProductManager {
     }
     
     //====================== File I/O ======================
-    
+    // Load data from file into productList
+    public void loadData() {
+        ArrayList<Product> loaded = productRepo.loadProducts();
+        productList.addAll(loaded);
+        System.out.println("Loaded " + loaded.size() + "products.");
+    }
+    // save data from productList into file
+    public void saveData () {
+        productRepo.saveProducts(productList);
+    }
 
 }

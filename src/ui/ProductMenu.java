@@ -31,8 +31,8 @@ public class ProductMenu {
             System.out.println("3. Remove Product");
             System.out.println("4. Display All Product");
             System.out.println("5. Search Product by ID");
-            System.out.println("0. Exit");
-            
+            System.out.println("0. Exit")  ;
+            System.out.print("Input your choice: ");
             choice = InputHelper.readInt(scanner); // goi tuw ham check integer from util
             // luu ý: cach dung nay chi co the dung khi ham do la static
             switch (choice) {
@@ -186,8 +186,11 @@ public class ProductMenu {
             System.out.println("Product not found!");
             return;
         }
-
+        
+        System.out.println(InputHelper.repeatChar("-", 170));
+        System.out.format("%-8s %-30s %-30s %-20s %-15s %-30s\n","ID", "Name", "Category", "Price", "Quantity", "Detail");
         System.out.println("Current Info: " + p);
+        System.out.println(InputHelper.repeatChar("-", 170));
 
         System.out.print("New Name (leave blank to skip): ");
         String newName = scanner.nextLine().trim();

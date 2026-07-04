@@ -28,9 +28,14 @@ public class Main {
         inventoryManager,
         voucherManager);
         
-        // ==================== CHẠY CHƯƠNG TRÌNH ====================
-            
+     // ==================== Load data ==================== 
+        productManager.loadData();
+
+    // ==================== CHẠY CHƯƠNG TRÌNH ====================     
         mainMenu.displayMainMenu();
-    }
     
+    
+    // ==================== save data ==================== 
+        productManager.saveData();
+    }    
 }

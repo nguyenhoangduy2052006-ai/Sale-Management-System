@@ -32,7 +32,7 @@ public class Television extends Product {
     }
     @Override
     public String toString () {
-        return super.toString() + String.format("| Screen Size: %s | Resolution: %s |", 
+        return super.toString() + String.format("Screen Size: %s, Resolution: %s", 
                 screenSize, resolution);
     }
 }

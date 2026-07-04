@@ -39,7 +39,7 @@ public class Smartphone extends Product {
     }
     @Override
     public String toString () {
-        return super.toString() + String.format("| Screen Size: %s | Camera: %s | Battery: %s |", 
+        return super.toString() + String.format("Screen Size: %s, Camera: %s, Battery: %s", 
                 screenSize, camera, battery);
     }
 }

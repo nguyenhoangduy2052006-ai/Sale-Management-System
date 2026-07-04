@@ -3,7 +3,7 @@ package util;
 
 import java.util.Scanner;
 public class InputHelper {
-    
+  
     // Ham check integer data
     public static int readInt (Scanner scanner) {
         while (true) {
@@ -84,4 +84,7 @@ public class InputHelper {
         }
         return result;
     }
+    
+    // check the variable is empty?
+    
 }

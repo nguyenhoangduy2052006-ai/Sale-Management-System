@@ -8,7 +8,7 @@ import java.util.List;
 public class CustomerRepository {
     private final String FILE_PATH = "customer.txt";
 
-    /**
+    /*
      * 1. HÀM LOAD: Đọc file thô -> Đúc thành Object -> Trả về cho CustomerManager
      */
     public ArrayList<Customer> load() {
