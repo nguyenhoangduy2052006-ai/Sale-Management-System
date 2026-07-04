@@ -4,9 +4,6 @@ import model.customer.Customer;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-// 👉 THÊM IMPORT NÀY
-import java.io.*;
-
 public class CustomerManager {
 
     private ArrayList<Customer> customerList;
@@ -66,6 +63,7 @@ public class CustomerManager {
         return false;
     }
 
+    // 5. Hiển thị danh sách khách hàng
     public void displayCustomers() {
         if (customerList.isEmpty()) {
             System.out.println("No customer found!");
@@ -78,6 +76,7 @@ public class CustomerManager {
         }
     }
 
+    // 6. Hiển thị top khách hàng mua nhiều nhất
     public void displayTopCustomers(int topN) {
         if (customerList.isEmpty()) {
             System.out.println("No customer found!");
@@ -98,64 +97,4 @@ public class CustomerManager {
             System.out.println("-------------------");
         }
     }
-
-    public void saveToFile(String filename) {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(filename));
-
-            for (Customer c : customerList) {
-                bw.write(c.getCustomerID() + ","
-                        + c.getCustomerName() + ","
-                        + c.getPhoneNumber() + ","
-                        + c.getAddress() + ","
-                        + c.getTotalPurchase());
-                bw.newLine();
-            }
-
-            bw.close();
-            System.out.println("Save customer success!");
-
-        } catch (IOException e) {
-            System.out.println("Save file error!");
-        }
-    }
-
-    // =========================
-    // FILE I/O - LOAD
-    // =========================
-    public void loadFromFile(String filename) {
-        try {
-            File file = new File(filename);
-
-            if (!file.exists()) {
-                System.out.println("File not found, skip load.");
-                return;
-            }
-
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = br.readLine()) != null) {
-
-                String[] p = line.split(",");
-
-                Customer c = new Customer(
-                        p[0],
-                        p[1],
-                        p[2],
-                        p[3],
-                        Double.parseDouble(p[4])
-                );
-
-                customerList.add(c);
-            }
-
-            br.close();
-            System.out.println("Load customer success!");
-
-        } catch (Exception e) {
-            System.out.println("Load file error!");
-        }
-    }
-
 }
