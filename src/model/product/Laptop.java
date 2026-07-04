@@ -39,7 +39,7 @@ public class Laptop extends Product{
     
     @Override
     public String toString () {
-        return super.toString() + String.format("| RAM: %s || CPU: %s | Storage: %s",
+        return super.toString() + String.format("RAM: %s, CPU: %s, Storage: %s",
                 ram, cpu, storage);
     }
 }

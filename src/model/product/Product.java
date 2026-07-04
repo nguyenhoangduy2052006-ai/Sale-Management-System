@@ -15,11 +15,6 @@ public abstract class Product { // Abstract giup xac dinh cu the tung san pham
     private int quantity;
 
     public Product(String productId, String productName, String category, double price, int quantity) {
-        if (!isValidId(productId)) {
-            throw new IllegalArgumentException(
-                    "Invalid product ID: " + productId + ". Must start with " + getIdPrefix() + " followed by numbers."
-            );
-        }
         this.productId = productId;
         this.productName = productName;
         this.category = category;
@@ -96,7 +91,7 @@ public abstract class Product { // Abstract giup xac dinh cu the tung san pham
     
     @Override
     public String toString () {
-        return String.format("ProductId= %s, Product Name = %s, Category= %s, Price= %.2f, Quantity= %d",
+        return String.format("%-8s %-30s %-30s %-20.2f %-15d",
                 productId, productName, category, price, quantity);
     }
 

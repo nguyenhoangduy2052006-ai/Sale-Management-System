@@ -70,8 +70,47 @@ public class ProductMenu {
         System.out.println("3. Television");
         int type = InputHelper.readInt(scanner, 1, 3);
 
-        System.out.print("Product ID (e.g: LT001, SP001, TV001): ");
-        String id = scanner.nextLine().trim();
+            String prefix;
+            switch (type) {
+                case 1:
+                    prefix = "LT";
+                    break;
+                case 2:
+                    prefix = "SP";
+                    break;
+                default:
+                    prefix = "TV";
+                    break;
+            }
+
+            // ← VALIDATE ID NGAY TẠI ĐÂY — vòng lặp yêu cầu nhập lại nếu sai
+            String id;
+            while (true) {
+                System.out.print("Product ID (e.g: " + prefix + "001): ");
+                id = scanner.nextLine().trim();
+
+                // Kiểm tra đúng prefix
+                if (!id.startsWith(prefix)) {
+                    System.out.println("Invalid ID! Must start with " + prefix + ". Please try again.");
+                    continue;
+                }
+
+                // Kiểm tra phần sau prefix phải là số
+                String numberPart = id.substring(prefix.length());
+                if (numberPart.isEmpty() || !numberPart.matches("\\d+")) {
+                    System.out.println("Invalid ID! After " + prefix + " must be numbers. Please try again.");
+                    continue;
+                }
+
+                // Kiểm tra ID đã tồn tại chưa
+                if (productManager.findProductById(id) != null) {
+                    System.out.println("ID already existed! Please try again.");
+                    continue;
+                }
+
+                break; // ← ID hợp lệ → thoát vòng lặp
+            }
+
 
         System.out.print("Product Name: ");
         String name = scanner.nextLine().trim();
@@ -193,10 +232,14 @@ public class ProductMenu {
     // Display Product list
     private void displayProductList () {
         System.out.println("----- PRODUCT LIST -----\n");
+        System.out.println(InputHelper.repeatChar("-", 180));
+        System.out.format("%-8s %-30s %-30s %-20s %-15s %-30s\n","ID", "Name", "Category", "Price", "Quantity", "Detail");
+        System.out.println(InputHelper.repeatChar("-", 180));
         if (productManager.getProductList().isEmpty()) {
             System.out.println("No products available.");
         } else {
             productManager.displayProductList();
         }
+        
     }
 }
