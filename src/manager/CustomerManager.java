@@ -1,15 +1,18 @@
 package manager;
 
 import model.customer.Customer;
+import repository.CustomerRepository;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class CustomerManager {
 
     private ArrayList<Customer> customerList;
+    private CustomerRepository repository; 
 
     public CustomerManager() {
-        customerList = new ArrayList<>();
+        repository = new CustomerRepository(); 
+        customerList = new ArrayList<>(); // Khởi tạo danh sách rỗng, dữ liệu sẽ được nạp thông qua Main
     }
 
     // 1. Thêm khách hàng mới
@@ -24,6 +27,7 @@ public class CustomerManager {
         }
 
         customerList.add(customer);
+        // Đã bỏ dòng repository.save() tại đây để tối ưu hóa, dữ liệu sẽ lưu khi THOÁT ứng dụng
         return true;
     }
 
@@ -45,6 +49,8 @@ public class CustomerManager {
             c.setCustomerName(name);
             c.setPhoneNumber(phone);
             c.setAddress(address);
+            
+            // Đã bỏ dòng repository.save() tại đây
             return true;
         }
 
@@ -57,6 +63,8 @@ public class CustomerManager {
 
         if (c != null) {
             customerList.remove(c);
+            
+            // Đã bỏ dòng repository.save() tại đây
             return true;
         }
 
@@ -96,5 +104,17 @@ public class CustomerManager {
             System.out.println(sortedList.get(i));
             System.out.println("-------------------");
         }
+    }
+
+    // ==================== ĐÃ ĐỒNG BỘ XUỐNG CUỐI: LOAD & SAVE DATA ====================
+
+    // Nạp dữ liệu từ file txt vào danh sách customerList khi mở ứng dụng
+    public void loadData() {
+        this.customerList = repository.loadCustomers();
+    }
+
+    // Ghi đè toàn bộ danh sách customerList hiện tại xuống file txt khi tắt ứng dụng
+    public void saveData() {
+        repository.saveCustomers(this.customerList);
     }
 }
