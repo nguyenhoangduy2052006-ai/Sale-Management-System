@@ -1,15 +1,19 @@
 package manager;
 
 import model.voucher.Voucher;
+import repository.VoucherRepository; // Import repository để kết nối file
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class VoucherManager {
 
     private ArrayList<Voucher> voucherList;
+    // Khai báo đối tượng repository để phục vụ việc đọc/ghi file txt
+    private VoucherRepository voucherRepository;
 
     public VoucherManager() {
         voucherList = new ArrayList<>();
+        voucherRepository = new VoucherRepository(); // Khởi tạo repository
     }
 
     // Add voucher (check trùng ID hoặc Code)
@@ -108,5 +112,17 @@ public class VoucherManager {
 
         return v.isStatus()
                 && !v.getExpiryDate().isBefore(today);
+    }
+
+    // ==================== ĐÃ CHUYỂN XUỐNG CUỐI: LOAD & SAVE DATA ====================
+
+    // Nạp dữ liệu từ file txt vào danh sách voucherList khi mở ứng dụng
+    public void loadData() {
+        this.voucherList = voucherRepository.loadVouchers();
+    }
+
+    // Ghi đè toàn bộ danh sách voucherList hiện tại xuống file txt khi tắt ứng dụng
+    public void saveData() {
+        voucherRepository.saveVouchers(this.voucherList);
     }
 }
