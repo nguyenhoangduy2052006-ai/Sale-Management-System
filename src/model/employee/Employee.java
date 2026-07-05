@@ -16,6 +16,10 @@ public class Employee {
         this.password = password;
     }
 
+    public Employee(String id, String name, String role) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public String getEmployeeID() {
         return employeeID;
     }

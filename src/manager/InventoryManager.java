@@ -2,13 +2,16 @@ package manager;
 
 import model.inventory.Inventory;
 import java.util.ArrayList;
+import repository.InventoryRepository;
 
 public class InventoryManager {
 
     private ArrayList<Inventory> inventoryList;
+    private final String FILE_PATH = "data/inventory.txt";
 
     public InventoryManager() {
-        this.inventoryList = new ArrayList<>();
+        // AUTOMATIC LOAD: Fetch data from the txt file into the list when the Manager is initialized
+        this.inventoryList = InventoryRepository.loadInventory(FILE_PATH);
     }
 
     public boolean addInventory(Inventory inv) {
@@ -18,6 +21,8 @@ public class InventoryManager {
             }
         }
         inventoryList.add(inv);
+
+        InventoryRepository.saveInventory(FILE_PATH, inventoryList);
         return true;
     }
 
@@ -34,6 +39,8 @@ public class InventoryManager {
                 i.setItemName(newName.trim());
                 i.setQuantity(newQty);
                 i.setLocation(newLocation.trim());
+                // SAVE FILE: Automatically persist data to the txt file after updating
+                InventoryRepository.saveInventory(FILE_PATH, inventoryList);
                 return true;
             }
         }
@@ -44,6 +51,8 @@ public class InventoryManager {
         for (int i = 0; i < inventoryList.size(); i++) {
             if (inventoryList.get(i).getInventoryID().equalsIgnoreCase(id)) {
                 inventoryList.remove(i);
+
+                InventoryRepository.saveInventory(FILE_PATH, inventoryList);
                 return true;
             }
         }
@@ -62,6 +71,8 @@ public class InventoryManager {
     }
 
     public ArrayList<Inventory> getAllInventory() {
+
+        inventoryList = InventoryRepository.loadInventory(FILE_PATH);
         return inventoryList;
     }
 
@@ -75,16 +86,24 @@ public class InventoryManager {
     }
 
     public boolean reduceStock(String id, int sellQty) {
+
+        inventoryList = InventoryRepository.loadInventory(FILE_PATH);
+
         Inventory inv = findById(id);
         if (inv == null || sellQty <= 0) {
+            System.out.println("Inventory Error: Product not found or invalid sales quantity!");
             return false;
         }
 
         if (inv.getQuantity() < sellQty) {
+            System.out.println("Inventory Error: Insufficient stock available for this sale!");
             return false;
         }
 
         inv.setQuantity(inv.getQuantity() - sellQty);
+        System.out.println("Inventory: Successfully reduced " + sellQty + " unit(s) for Product ID: " + id);
+
+        InventoryRepository.saveInventory(FILE_PATH, inventoryList);
         return true;
     }
 }
