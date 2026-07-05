@@ -1,58 +1,65 @@
 package repository;
 
 import model.customer.Customer;
-import util.FileUtils; // Sửa thành util (số ít, bỏ chữ s)
+import util.FileUtils;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerRepository {
-    private final String FILE_PATH = "customer.txt";
+    private static final String FILE_PATH = "data/customers.txt";
 
-    /*
-     * 1. HÀM LOAD: Đọc file thô -> Đúc thành Object -> Trả về cho CustomerManager
-     */
-    public ArrayList<Customer> load() {
-        ArrayList<Customer> list = new ArrayList<>();
-        List<String> lines = FileUtils.readLines(FILE_PATH); // Sửa thành readLines cho đúng với file FileUtils
+    // LOAD — đọc file tạo danh sách Customer
+    public ArrayList<Customer> loadCustomers() {
+        ArrayList<Customer> customerList = new ArrayList<>();
+        List<String> lines = FileUtils.readLines(FILE_PATH);
         
         for (String line : lines) {
-            String[] parts = line.split(",");
-            
-            // Kiểm tra cấu trúc dòng có đủ dữ liệu không (ít nhất là 5 trường)
-            if (parts.length >= 5) {
-                // Bám sát theo các trường bạn dùng trong Manager
-                String id = parts[0].trim();
-                String name = parts[1].trim();
-                String phone = parts[2].trim();
-                String address = parts[3].trim();
-                double totalPurchase = Double.parseDouble(parts[4].trim());
+            try {
+                if (line.trim().isEmpty()) continue; // bỏ qua dòng trống nếu có
                 
-                // Khởi tạo đối tượng Customer
-                Customer customer = new Customer(id, name, phone, address, totalPurchase);
+                String[] parts = line.split("\\|");
                 
-                list.add(customer);
+                // Kiểm tra cấu trúc dòng có đủ dữ liệu không (ít nhất là 5 trường)
+                if (parts.length >= 5) {
+                    String id = parts[0].trim();
+                    String name = parts[1].trim();
+                    String phone = parts[2].trim();
+                    String address = parts[3].trim();
+                    double totalPurchase = Double.parseDouble(parts[4].trim());
+                    
+                    Customer customer = new Customer(id, name, phone, address, totalPurchase);
+                    
+                    if (customer != null) {
+                        customerList.add(customer);
+                    }
+                }
+            } 
+            catch (Exception e) {
+                System.out.println("Error parsing line: " + line + " - skipping");
             }
         }
-        return list;
+        
+        // === ĐỒNG BỘ: In thông báo số lượng customer giống hệt Voucher và Product ===
+        System.out.println("Loaded " + customerList.size() + " customers.");
+        
+        return customerList;
     }
 
-    /**
-     * 2. HÀM SAVE: Lấy danh sách từ CustomerManager -> Chuyển thành chuỗi -> Ghi xuống file .txt
-     */
-    public void save(ArrayList<Customer> list) {
+    // SAVE — convert danh sách Customer -> ghi xuống file
+    public void saveCustomers(ArrayList<Customer> customerList) {
         List<String> lines = new ArrayList<>();
         
-        for (Customer c : list) {
-            // Sử dụng CHÍNH XÁC các hàm getter có trong Customer của bạn
-            // Bỏ các dấu chấm phẩy ở giữa dòng, chỉ để 1 dấu ở cuối câu lệnh nối chuỗi
-            String line = c.getCustomerID() + "," +
-                          c.getCustomerName() + "," +
-                          c.getPhoneNumber() + "," +
-                          c.getAddress() + "," +
+        for (Customer c : customerList) {
+            // Convert toàn bộ thuộc tính đối tượng thành chuỗi text phân tách bằng dấu |
+            String line = c.getCustomerID() + "|" +
+                          c.getCustomerName() + "|" +
+                          c.getPhoneNumber() + "|" +
+                          c.getAddress() + "|" +
                           c.getTotalPurchase();
 
             lines.add(line);
         }
-        FileUtils.writeLines(FILE_PATH, lines); // Sửa thành writeLines cho đúng với file FileUtils
+        
+        FileUtils.writeLines(FILE_PATH, lines);
     }
 }
