@@ -28,8 +28,10 @@ public class Main {
         inventoryManager,
         voucherManager);
         
-     // ==================== Load data ==================== 
+        // ==================== Load data ==================== 
         productManager.loadData();
+        voucherManager.loadData();  // ĐÃ THÊM: Tự động nạp danh sách voucher từ file txt lên bộ nhớ
+        customerManager.loadData(); // ĐÃ THÊM MỚI: Tự động nạp danh sách khách hàng từ file txt lên bộ nhớ
 
     // ==================== CHẠY CHƯƠNG TRÌNH ====================     
         mainMenu.displayMainMenu();
@@ -37,5 +39,7 @@ public class Main {
     
     // ==================== save data ==================== 
         productManager.saveData();
+        voucherManager.saveData();  // ĐÃ THÊM: Tự động ghi đè danh sách voucher mới xuống file txt khi thoát
+        customerManager.saveData(); // ĐÃ THÊM MỚI: Tự động ghi đè danh sách khách hàng mới xuống file txt khi thoát
     }    
 }
