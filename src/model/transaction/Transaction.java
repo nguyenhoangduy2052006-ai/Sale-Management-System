@@ -119,14 +119,28 @@ public class Transaction {
     }
 
     @Override
-    public String toString() {
-        return "Transaction{" +
-                "transactionId='" + transactionId + '\'' +
-                ", customerId='" + customerId + '\'' +
-                ", transactionType='" + transactionType + '\'' +
-                ", transactionDate='" + transactionDate + '\'' +
-                ", totalAmount=" + getTotalAmount() +
-                ", orderItems=" + orderItems +
-                '}';
+public String toString() {
+
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("\n=========================================\n");
+    sb.append("Transaction ID   : ").append(transactionId).append("\n");
+    sb.append("Customer ID      : ").append(customerId).append("\n");
+    sb.append("Type             : ").append(transactionType).append("\n");
+    sb.append("Date             : ").append(transactionDate).append("\n");
+    sb.append("Total Amount     : ")
+      .append(String.format("%,.0f", getTotalAmount()))
+      .append("\n");
+    sb.append("-----------------------------------------\n");
+    sb.append("Order Items:\n");
+
+    for (OrderItem item : orderItems) {
+        sb.append(item).append("\n");
+    }
+
+    sb.append("=========================================");
+
+    return sb.toString();
+    
     }
 }

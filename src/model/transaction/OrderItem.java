@@ -99,14 +99,16 @@ public class OrderItem {
         return quantity * unitPrice;
     }
 
-    @Override
-    public String toString() {
-        return "OrderItem{" +
-                "orderItemId='" + orderItemId + '\'' +
-                ", productId='" + productId + '\'' +
-                ", quantity=" + quantity +
-                ", unitPrice=" + unitPrice +
-                ", totalPrice=" + getTotalPrice() +
-                '}';
+   @Override
+public String toString() {
+
+    return String.format(
+            "  %-8s | %-8s | Qty: %-3d | Unit: %,.0f | Total: %,.0f",
+            orderItemId,
+            productId,
+            quantity,
+            unitPrice,
+            getTotalPrice()
+        );       
     }
 }
