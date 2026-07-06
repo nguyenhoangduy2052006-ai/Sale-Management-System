@@ -1,38 +1,48 @@
 package repository;
 
 import java.util.ArrayList;
-import model.employee.Employee;
-import util.FileUtils; 
+import java.util.List;
+import model.employee.Employee; // Đảm bảo đúng tên package model của ông
+import util.FileUtils;
 
 public class EmployeeRepository {
 
-    // Hàm load: Đọc file .txt -> Chuyển thành ArrayList<Employee>
+    // LOAD — Read file using Duy's shared readLines function
     public static ArrayList<Employee> loadEmployees(String filePath) {
         ArrayList<Employee> list = new ArrayList<>();
-        // Gọi hàm đọc file dùng chung từ FileUtils
-        ArrayList<String> lines = FileUtils.readFile(filePath); 
+        List<String> lines = FileUtils.readLines(filePath); 
 
         for (String line : lines) {
-            if (line.trim().isEmpty()) continue;
-            String[] parts = line.split(",");
-            if (parts.length == 3) {
-                String id = parts[0].trim();
-                String name = parts[1].trim();
-                String role = parts[2].trim();
-                list.add(new Employee(id, name, role)); 
+            try {
+                if (line.trim().isEmpty()) continue;
+                
+                // Giả sử dữ liệu phân tách bằng dấu phẩy hoặc dấu gạch đứng tùy file dữ liệu của nhóm ông
+                String[] parts = line.split(","); 
+                if (parts.length >= 4) { // Điều chỉnh số lượng thuộc tính cho khớp với Model Employee
+                    String id = parts[0].trim();
+                    String name = parts[1].trim();
+                    // Thêm các thuộc tính khác của Employee vào đây...
+                    
+                    // list.add(new Employee(id, name, ...));
+                }
+            } catch (Exception e) {
+                System.out.println("Error parsing employee line: " + line + " - skipping");
             }
         }
         return list;
     }
 
-    // Hàm save: Gom ArrayList<Employee> -> Chuyển thành chuỗi thô -> Ghi xuống file
+    // SAVE — Write file using Duy's shared writeLines function
     public static void saveEmployees(String filePath, ArrayList<Employee> list) {
-        ArrayList<String> lines = new ArrayList<>();
+        List<String> lines = new ArrayList<>();
+        
         for (Employee emp : list) {
-            // ĐÃ SỬA: Dùng chính xác getEmployeeID() và getEmployeeName() của ông
-            String line = emp.getEmployeeID() + "," + emp.getEmployeeName() + "," + emp.getRole();
+            // Chuyển Object thành chuỗi string format tương ứng
+            String line = emp.getEmployeeID() + "," + emp.getEmployeeName(); // Thêm các thuộc tính khác...
             lines.add(line);
         }
-        FileUtils.writeFile(filePath, lines); 
+        
+        FileUtils.writeLines(filePath, lines);
+        System.out.println("Employees saved successfully!");
     }
 }
