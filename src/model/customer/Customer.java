@@ -50,8 +50,13 @@ public class Customer {
         return totalPurchase;
     }
 
+  
     public void setTotalPurchase(double totalPurchase) {
-        this.totalPurchase = totalPurchase;
+        if (totalPurchase >= 0) {
+            this.totalPurchase = totalPurchase;
+        } else {
+            System.out.println("Invalid total purchase! Amount cannot be negative.");
+        }
     }
 
     @Override
