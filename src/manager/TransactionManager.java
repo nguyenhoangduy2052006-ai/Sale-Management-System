@@ -1,14 +1,18 @@
 package manager;
 
 import java.util.ArrayList;
+import model.product.Product;
 import model.transaction.Transaction;
+import repository.TransactionRepository;
 
 public class TransactionManager {
 
     private final ArrayList<Transaction> transactionList;
+    private final TransactionRepository transactionRepo;
 
     public TransactionManager() {
-        transactionList = new ArrayList<>();
+        this.transactionList = new ArrayList<>();
+        this.transactionRepo= new TransactionRepository();
     }
 
     // CREATE
@@ -154,5 +158,17 @@ public class TransactionManager {
     // Return transaction list
     public ArrayList<Transaction> getTransactionList() {
         return transactionList;
+    }
+    
+    //====================== File I/O ======================
+    // Load data from file into productList
+    public void loadData() {
+        ArrayList<Transaction> loaded = transactionRepo.loadTransactions();
+        transactionList.addAll(loaded);
+        System.out.println("Loaded " + loaded.size() + " transactions.");
+    }
+    // save data from productList into file
+    public void saveData () {
+        transactionRepo.saveTransactions(transactionList);
     }
 }

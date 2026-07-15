@@ -48,11 +48,12 @@ public class FileUtils {
         }
     }
 
+    /*
     public static ArrayList<String> readFile(String filePath) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     public static void writeFile(String filePath, ArrayList<String> lines) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    }*/
 }

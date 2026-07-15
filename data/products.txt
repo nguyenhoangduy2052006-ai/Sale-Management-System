@@ -1,1 +1,3 @@
 LT|LT001|Lenovo LOQ|Electronic|3.0E7|45|24GB|Intel core i5|512GB
+TV|TV001|Samsung|TV|3.0E7|30|70 inch|120k
+SP|SP002|Apple|Phone|3.0E7|20|6.7 inch|50MB|40000mah

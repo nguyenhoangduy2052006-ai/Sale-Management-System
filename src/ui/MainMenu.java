@@ -4,6 +4,7 @@ package ui;
 import manager.*;
 
 import java.util.Scanner;
+import util.InputHelper;
 
 public class MainMenu {
     private final ProductMenu productMenu;

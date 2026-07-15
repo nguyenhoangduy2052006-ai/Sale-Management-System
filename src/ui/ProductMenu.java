@@ -189,7 +189,7 @@ public class ProductMenu {
         
         System.out.println(InputHelper.repeatChar("-", 170));
         System.out.format("%-8s %-30s %-30s %-20s %-15s %-30s\n","ID", "Name", "Category", "Price", "Quantity", "Detail");
-        System.out.println("Current Info: " + p);
+        System.out.println(p);
         System.out.println(InputHelper.repeatChar("-", 170));
 
         System.out.print("New Name (leave blank to skip): ");
@@ -215,7 +215,7 @@ public class ProductMenu {
         if (productManager.removeProduct(id)) {
             System.out.println("Removed successfully!");
         } else {
-            System.out.println("Product not found!");
+            System.out.println("Error. Product not found " + id);
         }
     }
     
@@ -226,9 +226,12 @@ public class ProductMenu {
         Product p = productManager.findProductById(id);
 
         if (p != null) {
-            System.out.println("Found: " + p);
+            System.out.println(InputHelper.repeatChar("-", 180));
+            System.out.format("%-8s %-30s %-30s %-20s %-15s %-30s\n","ID", "Name", "Category", "Price", "Quantity", "Detail");
+            System.out.println(p);
+            System.out.println(InputHelper.repeatChar("-", 180));
         } else {
-            System.out.println(" Product not found!");
+            System.out.println("Product not found!");
         }
     }
     

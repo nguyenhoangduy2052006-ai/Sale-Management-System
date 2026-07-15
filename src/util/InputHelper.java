@@ -85,6 +85,13 @@ public class InputHelper {
         return result;
     }
     
+    
+    // Clear the screen
+    public static void clearScreen() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+    }
     // check the variable is empty?
     
 }

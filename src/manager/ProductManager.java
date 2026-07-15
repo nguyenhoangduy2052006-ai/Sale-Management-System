@@ -68,7 +68,6 @@ public class ProductManager {
     public boolean removeProduct(String productId) {
         Product p = findProductById(productId);
         if (p == null) {
-            System.out.println("Error. Not found product to delete: " + productId);
             return false;
         } else {
             this.productList.remove(p);
@@ -88,7 +87,7 @@ public class ProductManager {
     public void loadData() {
         ArrayList<Product> loaded = productRepo.loadProducts();
         productList.addAll(loaded);
-        System.out.println("Loaded " + loaded.size() + "products.");
+        System.out.println("Loaded " + loaded.size() + " products.");
     }
     // save data from productList into file
     public void saveData () {

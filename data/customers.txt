@@ -1,0 +1,2 @@
+RC001|Tran Thi Hanh|0456789222|Quan 1, HCM|1.0
+Nguyen Hoang Duy|Nguyen Hoang DUy|098677744|Quan 2, HCM|2.0
