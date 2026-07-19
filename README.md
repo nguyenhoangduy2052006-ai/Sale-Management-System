@@ -21,9 +21,9 @@ The system is built using **Object-Oriented Programming (OOP)** principles in Ja
 | Member | Responsibilities |
 |--------|-----------------|
 | Nguyễn Hoàng Duy | Main.java, Product module, Report module, GitHub merge |
-| Thảo | Customer module, Voucher module |
-| Tùng | Employee module, Supplier module, Inventory module |
-| Huy | Transaction module, OrderItem module |
+| Lê Ngọc Thảo | Customer module, Voucher module |
+| Bạch Vũ Huy | Employee module, Supplier module, Inventory module |
+| Nguyễn Xuân Tùng | Transaction module, OrderItem module |
 
 ---
 
